@@ -164,7 +164,8 @@ namespace Bombones.Datos.Repositorios
                             INNER JOIN TiposDeChocolates tc ON b.TipoDeChocolateId = tc.TipoDeChocolateId
                             INNER JOIN TiposDeNueces tn ON b.TipoDeNuezId = tn.TipoDeNuezId
                             INNER JOIN TiposDeRellenos tr ON b.TipoDeRellenoId = tr.TipoDeRellenoId
-                            INNER JOIN Fabricas f ON b.FabricaId = f.FabricaId";
+                            INNER JOIN Fabricas f ON b.FabricaId = f.FabricaId
+                            ORDER BY b.NombreBombon";
             var lista = conn.Query<BombonListDto>(selectQuery).ToList();
             if (filter != null)
             {
