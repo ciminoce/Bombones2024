@@ -14,5 +14,7 @@ namespace Bombones.Servicios.Intefaces
         Fabrica? GetFabricaPorId(int fabricaId);
         int GetCantidad(Pais? paisSeleccionado = null, ProvinciaEstado? provSeleccionada = null, Ciudad? ciudadSeleccionada=null);
         int GetPaginaPorRegistro(string nombreFabrica, int pageSize);
+        List<Fabrica> GetLista();
+
     }
 }

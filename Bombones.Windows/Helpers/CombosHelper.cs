@@ -1,4 +1,5 @@
-﻿using Bombones.Entidades.Entidades;
+﻿using Bombones.Entidades.Dtos;
+using Bombones.Entidades.Entidades;
 using Bombones.Servicios.Intefaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -107,6 +108,75 @@ namespace Bombones.Windows.Helpers
             cbo.DataSource = lista;
             cbo.DisplayMember = "Descripcion";
             cbo.ValueMember = "TipoDireccionId";
+            cbo.SelectedIndex = 0;
+        }
+
+        public static void CargarComboTiposDeChocolate(ref ComboBox cbo, IServiceProvider? serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            IServiciosTiposDeChocolates? servicio = _serviceProvider?.GetService<IServiciosTiposDeChocolates>();
+            var lista = servicio?.GetLista();
+            var defaultTipo = new TipoDeChocolate()
+            {
+                TipoDeChocolateId = 0,
+                Descripcion = "Seleccione"
+            };
+            lista?.Insert(0, defaultTipo);
+            cbo.DataSource = lista;
+            cbo.DisplayMember = "Descripcion";
+            cbo.ValueMember = "TipoDeChocolateId";
+            cbo.SelectedIndex = 0;
+
+        }
+
+        public static void CargarComboTiposDeRelleno(ref ComboBox cbo, IServiceProvider? serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            IServiciosTiposDeRellenos? servicio = _serviceProvider?.GetService<IServiciosTiposDeRellenos>();
+            var lista = servicio?.GetLista();
+            var defaultTipo = new TipoDeRelleno()
+            {
+                TipoDeRellenoId = 0,
+                Descripcion = "Seleccione"
+            };
+            lista?.Insert(0, defaultTipo);
+            cbo.DataSource = lista;
+            cbo.DisplayMember = "Descripcion";
+            cbo.ValueMember = "TipoDeRellenoId";
+            cbo.SelectedIndex = 0;
+        }
+
+        internal static void CargarComboTiposDeNueces(ref ComboBox cbo, IServiceProvider? serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            IServiciosTiposDeNueces? servicio = _serviceProvider?.GetService<IServiciosTiposDeNueces>();
+            var lista = servicio?.GetLista();
+            var defaultTipo = new TipoDeNuez()
+            {
+                TipoDeNuezId = 0,
+                Descripcion = "Seleccione"
+            };
+            lista?.Insert(0, defaultTipo);
+            cbo.DataSource = lista;
+            cbo.DisplayMember = "Descripcion";
+            cbo.ValueMember = "TipoDeNuezId";
+            cbo.SelectedIndex = 0;
+        }
+
+        internal static void CargarComboFabricas(ref ComboBox cbo, IServiceProvider? serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            IServiciosFabricas? servicio = _serviceProvider?.GetService<IServiciosFabricas>();
+            var lista = servicio?.GetLista();
+            var defaultTipo = new Fabrica()
+            {
+                FabricaId = 0,
+                NombreFabrica = "Seleccione"
+            };
+            lista?.Insert(0, defaultTipo);
+            cbo.DataSource = lista;
+            cbo.DisplayMember = "NombreFabrica";
+            cbo.ValueMember = "FabricaId";
             cbo.SelectedIndex = 0;
         }
     }

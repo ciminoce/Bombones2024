@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBombonesAE));
             cboFabricas = new ComboBox();
             btnCancelar = new Button();
@@ -57,10 +58,13 @@
             label8 = new Label();
             txtBombon = new TextBox();
             label1 = new Label();
+            errorProvider1 = new ErrorProvider(components);
+            openFileDialog1 = new OpenFileDialog();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picImagen).BeginInit();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // cboFabricas
@@ -82,6 +86,7 @@
             btnCancelar.Text = "Cancelar";
             btnCancelar.TextImageRelation = TextImageRelation.ImageAboveText;
             btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // btnOk
             // 
@@ -93,6 +98,7 @@
             btnOk.Text = "Ok";
             btnOk.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOk.UseVisualStyleBackColor = true;
+            btnOk.Click += btnOk_Click;
             // 
             // label10
             // 
@@ -155,6 +161,7 @@
             btnBuscarImagen.Text = "Buscar";
             btnBuscarImagen.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnBuscarImagen.UseVisualStyleBackColor = true;
+            btnBuscarImagen.Click += btnBuscarImagen_Click;
             // 
             // groupBox3
             // 
@@ -323,6 +330,14 @@
             label1.TabIndex = 11;
             label1.Text = "Bombón:";
             // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
             // frmBombonesAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -354,6 +369,7 @@
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -388,5 +404,7 @@
         private Label label8;
         private TextBox txtBombon;
         private Label label1;
+        private ErrorProvider errorProvider1;
+        private OpenFileDialog openFileDialog1;
     }
 }

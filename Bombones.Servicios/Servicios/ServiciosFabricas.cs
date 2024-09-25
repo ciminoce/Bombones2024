@@ -86,6 +86,15 @@ namespace Bombones.Servicios.Servicios
             }
         }
 
+        public List<Fabrica> GetLista()
+        {
+            using (var conn = new SqlConnection(_cadena))
+            {
+                conn.Open();
+                return _repositorio!.GetLista(conn);
+            }
+        }
+
         public int GetPaginaPorRegistro(string nombreFabrica, int pageSize)
         {
             using (var conn = new SqlConnection(_cadena))

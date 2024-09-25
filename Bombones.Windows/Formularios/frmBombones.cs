@@ -1,7 +1,9 @@
 ﻿using Bombones.Entidades.Dtos;
+using Bombones.Entidades.Entidades;
 using Bombones.Servicios.Intefaces;
 using Bombones.Windows.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Bombones.Windows.Formularios
 {
@@ -9,6 +11,7 @@ namespace Bombones.Windows.Formularios
     {
         private List<BombonListDto> lista = null!;
         private readonly IServiciosBombones? _servicio;
+        private readonly IServiceProvider? _serviceProvider;
 
         private int currentPage = 1;//pagina actual
         private int totalPages = 0;//total de paginas
@@ -19,6 +22,7 @@ namespace Bombones.Windows.Formularios
         public frmBombones(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
             _servicio = serviceProvider?.GetService<IServiciosBombones>()
                 ?? throw new ApplicationException("Dependencias no cargadas!!!"); ;
         }
@@ -184,5 +188,144 @@ namespace Bombones.Windows.Formularios
             }
 
         }
+        private void tsbNuevo_Click(object sender, EventArgs e)
+        {
+            frmBombonesAE frm = new frmBombonesAE(_serviceProvider);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            try
+            {
+                Bombon? bombon = frm.GetBombon();
+                if (bombon is null) return;
+                if (!_servicio!.Existe(bombon))
+                {
+                    _servicio.Guardar(bombon);
+
+
+                    totalRecords = _servicio?.GetCantidad() ?? 0;
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    currentPage = _servicio?.GetPaginaPorRegistro(bombon.Nombre, pageSize) ?? 0;
+                    LoadData();
+
+                    MessageBox.Show("Registro agregado",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Registro existente\nAlta denegada",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void tsbBorrar_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag is null) return;
+            var bombonDto = (BombonListDto)r.Tag;
+            DialogResult dr = MessageBox.Show($"¿Desea dar de baja la bombon. {bombonDto.NombreBombon}?",
+                "Confirmar",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+            if (dr == DialogResult.No) return;
+            try
+            {
+                if (!_servicio!.EstaRelacionado(bombonDto.BombonId))
+                {
+                    _servicio!.Borrar(bombonDto.BombonId);
+                    totalRecords = _servicio!.GetCantidad();
+                    totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+                    if (currentPage > totalPages) currentPage = totalPages; // Ajustar la página actual si se reduce el total de páginas
+
+                    LoadData();
+                    MessageBox.Show("Registro eliminado",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Registro relacionado!!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void tsbEditar_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag == null) return;
+            BombonListDto bombonDto = (BombonListDto)r.Tag;
+            Bombon? bombon = _servicio!?.GetBombonPorId(bombonDto.BombonId);
+            if (bombon is null) return;
+            frmBombonesAE frm = new frmBombonesAE(_serviceProvider) { Text = "Editar Bombon" };
+            frm.SetBombon(bombon);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            bombon = frm.GetBombon();
+
+            if (bombon == null) return;
+            try
+            {
+
+                if (!_servicio!.Existe(bombon))
+                {
+                    _servicio!?.Guardar(bombon);
+
+
+                    currentPage = _servicio!.GetPaginaPorRegistro(bombon.Nombre, pageSize);
+                    LoadData();
+                    int row = GridHelper.ObtenerRowIndex(dgvDatos, bombon.ProductoId);
+                    GridHelper.MarcarRow(dgvDatos, row);
+                }
+                else
+                {
+                    MessageBox.Show("Registro existente\nEdición denegada",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            }
+
+        }
+
+
+
     }
 }

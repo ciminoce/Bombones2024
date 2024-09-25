@@ -19,5 +19,6 @@ namespace Bombones.Datos.Interfaces
         Fabrica? GetFabricaPorId(int fabricaId, SqlConnection conn);
         int GetCantidad(SqlConnection conn, SqlTransaction? tran = null);
         int GetPaginaPorRegistro(SqlConnection conn, string nombreFabrica, int pageSize, SqlTransaction? tran = null);
+        List<Fabrica> GetLista(SqlConnection conn, SqlTransaction? tran = null);
     }
 }

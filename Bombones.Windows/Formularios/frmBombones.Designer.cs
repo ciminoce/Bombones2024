@@ -87,6 +87,7 @@ namespace Bombones.Windows.Formularios
             tsbNuevo.Size = new Size(46, 59);
             tsbNuevo.Text = "Nuevo";
             tsbNuevo.TextImageRelation = TextImageRelation.ImageAboveText;
+            tsbNuevo.Click += tsbNuevo_Click;
             // 
             // tsbBorrar
             // 
@@ -97,6 +98,7 @@ namespace Bombones.Windows.Formularios
             tsbBorrar.Size = new Size(44, 59);
             tsbBorrar.Text = "Borrar";
             tsbBorrar.TextImageRelation = TextImageRelation.ImageAboveText;
+            tsbBorrar.Click += tsbBorrar_Click;
             // 
             // tsbEditar
             // 
@@ -107,6 +109,7 @@ namespace Bombones.Windows.Formularios
             tsbEditar.Size = new Size(44, 59);
             tsbEditar.Text = "Editar";
             tsbEditar.TextImageRelation = TextImageRelation.ImageAboveText;
+            tsbEditar.Click += tsbEditar_Click;
             // 
             // toolStripSeparator1
             // 
@@ -127,14 +130,14 @@ namespace Bombones.Windows.Formularios
             // nombreBombónToolStripMenuItem
             // 
             nombreBombónToolStripMenuItem.Name = "nombreBombónToolStripMenuItem";
-            nombreBombónToolStripMenuItem.Size = new Size(180, 22);
+            nombreBombónToolStripMenuItem.Size = new Size(167, 22);
             nombreBombónToolStripMenuItem.Text = "Nombre Bombón";
             nombreBombónToolStripMenuItem.Click += nombreBombónToolStripMenuItem_Click;
             // 
             // variosToolStripMenuItem
             // 
             variosToolStripMenuItem.Name = "variosToolStripMenuItem";
-            variosToolStripMenuItem.Size = new Size(180, 22);
+            variosToolStripMenuItem.Size = new Size(167, 22);
             variosToolStripMenuItem.Text = "Varios";
             // 
             // tsbActualizar

@@ -112,6 +112,12 @@ namespace Bombones.Datos.Repositorios
             return conn.Query<FabricaListDto>(selectQuery).ToList();
         }
 
+        public List<Fabrica> GetLista(SqlConnection conn, SqlTransaction? tran = null)
+        {
+            string selectQuery = @"SELECT * FROM Fabricas ORDER BY NombreFabrica";
+            return conn.Query<Fabrica>(selectQuery).ToList();
+        }
+
         public int GetPaginaPorRegistro(SqlConnection conn, string nombreFabrica, int pageSize, SqlTransaction? tran = null)
         {
             var positionQuery = @"
