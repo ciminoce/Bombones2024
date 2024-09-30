@@ -42,7 +42,7 @@ namespace Bombones.Windows.Formularios
             try
             {
                 lista = _servicio!?.GetLista(currentPage, pageSize);
-                MostrarDatosEnGrilla(lista);
+                GridHelper.MostrarDatosEnGrilla<Pais>(lista,dgvDatos);
                 if (cboPaginas.Items.Count != totalPages)
                 {
                     CombosHelper.CargarComboPaginas(ref cboPaginas, totalPages);
@@ -60,20 +60,6 @@ namespace Bombones.Windows.Formularios
             }
         }
 
-        private void MostrarDatosEnGrilla(List<Pais>? lista)
-        {
-            GridHelper.LimpiarGrilla(dgvDatos);
-            if (lista is not null)
-            {
-                foreach (var item in lista)
-                {
-                    var r = GridHelper.ConstruirFila(dgvDatos);
-                    GridHelper.SetearFila(r, item);
-                    GridHelper.AgregarFila(r, dgvDatos);
-                }
-
-            }
-        }
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {

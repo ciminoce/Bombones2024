@@ -1,5 +1,6 @@
 ﻿using Bombones.Entidades.Dtos;
 using Bombones.Entidades.Entidades;
+using Bombones.Entidades.Enumeraciones;
 using Bombones.Servicios.Intefaces;
 using Bombones.Windows.Helpers;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,8 +10,8 @@ namespace Bombones.Windows.Formularios
 {
     public partial class frmBombones : Form
     {
-        private List<BombonListDto> lista = null!;
-        private readonly IServiciosBombones? _servicio;
+        private List<ProductoListDto> lista = null!;
+        private readonly IServiciosProductos? _servicio;
         private readonly IServiceProvider? _serviceProvider;
 
         private int currentPage = 1;//pagina actual
@@ -18,12 +19,14 @@ namespace Bombones.Windows.Formularios
         private int pageSize = 10;//registros por página
         private int totalRecords = 0;//cantidad de registros
 
-        private Func<BombonListDto, bool>? filter = null;
+        private Func<ProductoListDto, bool>? filter = null;
+
+        private TipoProducto tipoProducto = TipoProducto.Bombon;
         public frmBombones(IServiceProvider? serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _servicio = serviceProvider?.GetService<IServiciosBombones>()
+            _servicio = serviceProvider?.GetService<IServiciosProductos>()
                 ?? throw new ApplicationException("Dependencias no cargadas!!!"); ;
         }
 
@@ -40,7 +43,7 @@ namespace Bombones.Windows.Formularios
         {
             try
             {
-                totalRecords = _servicio!.GetCantidad(filter);
+                totalRecords = _servicio!.GetCantidad(tipoProducto, filter);
                 totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                 LoadData(filter);
             }
@@ -51,14 +54,14 @@ namespace Bombones.Windows.Formularios
             }
         }
 
-        private void LoadData(Func<BombonListDto, bool>? filter = null)
+        private void LoadData(Func<ProductoListDto, bool>? filter = null)
         {
             try
             {
-                lista = _servicio!.GetLista(currentPage, pageSize, filter);
+                lista = _servicio!.GetLista(currentPage, pageSize, tipoProducto, filter);
                 if (lista.Count > 0)
                 {
-                    MostrarDatosEnGrilla(lista);
+                    GridHelper.MostrarDatosEnGrilla<ProductoListDto>(lista, dgvDatos);
                     if (cboPaginas.Items.Count != totalPages)
                     {
                         CombosHelper.CargarComboPaginas(ref cboPaginas, totalPages);
@@ -90,7 +93,7 @@ namespace Bombones.Windows.Formularios
         private void btnPrimero_Click(object sender, EventArgs e)
         {
             currentPage = 1;
-            LoadData(filter);
+            LoadData( filter);
         }
 
         private void btnAnterior_Click(object sender, EventArgs e)
@@ -98,7 +101,7 @@ namespace Bombones.Windows.Formularios
             if (currentPage > 1)
             {
                 currentPage--;
-                LoadData(filter);
+                LoadData( filter);
             }
         }
 
@@ -113,30 +116,16 @@ namespace Bombones.Windows.Formularios
             if (currentPage < totalPages)
             {
                 currentPage++;
-                LoadData(filter);
+                LoadData( filter);
             }
         }
 
         private void cboPaginas_SelectedIndexChanged(object sender, EventArgs e)
         {
             currentPage = int.Parse(cboPaginas.Text);
-            LoadData(filter);
+            LoadData( filter);
         }
 
-        private void MostrarDatosEnGrilla(List<BombonListDto> lista)
-        {
-            GridHelper.LimpiarGrilla(dgvDatos);
-            if (lista is not null)
-            {
-                foreach (var b in lista)
-                {
-                    var r = GridHelper.ConstruirFila(dgvDatos);
-                    GridHelper.SetearFila(r, b);
-                    GridHelper.AgregarFila(r, dgvDatos);
-                }
-
-            }
-        }
 
 
 
@@ -160,9 +149,9 @@ namespace Bombones.Windows.Formularios
                 {
                     return;
                 }
-                filter = b => b.NombreBombon.ToUpper()
+                filter = b => b.Nombre.ToUpper()
                     .Contains(textoFiltro.ToUpper());
-                totalRecords = _servicio!.GetCantidad(filter);
+                totalRecords = _servicio!.GetCantidad(tipoProducto, filter);
                 currentPage = 1;
                 if (totalRecords > 0)
                 {
@@ -170,7 +159,7 @@ namespace Bombones.Windows.Formularios
                     tsbFiltrar.Enabled = false;
                     tsbFiltrar.BackColor = Color.Orange;
 
-                    LoadData(filter);
+                    LoadData( filter);
 
                 }
                 else
@@ -202,7 +191,7 @@ namespace Bombones.Windows.Formularios
                     _servicio.Guardar(bombon);
 
 
-                    totalRecords = _servicio?.GetCantidad() ?? 0;
+                    totalRecords = _servicio?.GetCantidad(tipoProducto) ?? 0;
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
                     currentPage = _servicio?.GetPaginaPorRegistro(bombon.Nombre, pageSize) ?? 0;
                     LoadData();
@@ -239,7 +228,7 @@ namespace Bombones.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag is null) return;
             var bombonDto = (BombonListDto)r.Tag;
-            DialogResult dr = MessageBox.Show($"¿Desea dar de baja la bombon. {bombonDto.NombreBombon}?",
+            DialogResult dr = MessageBox.Show($"¿Desea dar de baja el bombon {bombonDto.Nombre}?",
                 "Confirmar",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
@@ -247,10 +236,10 @@ namespace Bombones.Windows.Formularios
             if (dr == DialogResult.No) return;
             try
             {
-                if (!_servicio!.EstaRelacionado(bombonDto.BombonId))
+                if (!_servicio!.EstaRelacionado(bombonDto.ProductoId))
                 {
-                    _servicio!.Borrar(bombonDto.BombonId);
-                    totalRecords = _servicio!.GetCantidad();
+                    _servicio!.Borrar(bombonDto.ProductoId);
+                    totalRecords = _servicio!.GetCantidad(tipoProducto);
                     totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
                     if (currentPage > totalPages) currentPage = totalPages; // Ajustar la página actual si se reduce el total de páginas
 
@@ -285,7 +274,7 @@ namespace Bombones.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
             BombonListDto bombonDto = (BombonListDto)r.Tag;
-            Bombon? bombon = _servicio!?.GetBombonPorId(bombonDto.BombonId);
+            Bombon? bombon = _servicio!?.GetBombonPorId(bombonDto.ProductoId);
             if (bombon is null) return;
             frmBombonesAE frm = new frmBombonesAE(_serviceProvider) { Text = "Editar Bombon" };
             frm.SetBombon(bombon);

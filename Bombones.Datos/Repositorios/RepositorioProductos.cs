@@ -1,12 +1,13 @@
 ﻿using Bombones.Datos.Interfaces;
 using Bombones.Entidades.Dtos;
 using Bombones.Entidades.Entidades;
+using Bombones.Entidades.Enumeraciones;
 using Dapper;
 using System.Data.SqlClient;
 
 namespace Bombones.Datos.Repositorios
 {
-    public class RepositorioBombones : IRepositorioBombones
+    public class RepositorioProductos : IRepositorioProductos
     {
         public void Agregar(Bombon bombon, SqlConnection conn, SqlTransaction tran)
         {
@@ -138,22 +139,60 @@ namespace Bombones.Datos.Repositorios
             return conn.QuerySingleOrDefault<Bombon>(selectQuery, new { @BombonId = bombonId });
         }
 
-        public int GetCantidad(SqlConnection conn, Func<BombonListDto, bool>? filter = null, SqlTransaction? tran = null)
+        public int GetCantidad(SqlConnection conn, TipoProducto tipoProducto, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
         {
-            var selectQuery = @"SELECT * FROM Bombones";
-            var query = conn.Query<BombonListDto>(selectQuery).ToList();
+            var listaProductos=new List<ProductoListDto>();
+            if (tipoProducto==TipoProducto.Bombon)
+            {
+                var selectQuery = @"SELECT 
+                            BombonId AS ProductoId, 
+                            NombreBombon AS Nombre, 
+                            Descripcion, 
+                            TipoDeChocolateId, 
+                            TipoDeNuezId, 
+                            TipoDeRellenoId, 
+                            PrecioCosto, 
+                            PrecioVenta AS Precio, 
+                            Stock, 
+                            NivelDeReposicion, 
+                            Imagen, 
+                            FabricaId, 
+                            Suspendido FROM Bombones";
+                var listaBombones = conn.Query<BombonListDto>(selectQuery).ToList();
+                listaProductos.AddRange(listaBombones);
+
+            }
+            if (tipoProducto == TipoProducto.Caja)
+            {
+                var selectQuery = @"SELECT c.CajaId AS ProductoId,
+		                        c.NombreCaja AS Nombre,
+		                        (SELECT COUNT(*) FROM DetallesCajas dc WHERE dc.cajaId=c.CajaId) AS Variedades,
+		                        (SELECT SUM(dc.Cantidad) FROM DetallesCajas dc WHERE dc.CajaId=c.CajaId) as CantidadBombones,
+		                        c.PrecioVenta AS Precio,
+		                        c.Stock,
+		                        c.Suspendido 
+                             FROM Cajas c";
+                var listaCajas = conn.Query<CajaListDto>(selectQuery).ToList();
+                listaProductos.AddRange(listaCajas);
+
+            }
+
             if (filter != null)
             {
-                query = query.Where(filter).ToList();
+                listaProductos = listaProductos.Where(filter).ToList();
             }
-            return query.Count;
+            return listaProductos.Count;
         }
 
 
-        public List<BombonListDto> GetLista(SqlConnection conn, int currentPage, int pageSize, Func<BombonListDto, bool>? filter = null, SqlTransaction? tran = null)
+        public List<ProductoListDto> GetLista(SqlConnection conn, int currentPage, int pageSize, TipoProducto tipoProducto, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
         {
-            var selectQuery = @"SELECT b.BombonId, 
-                                   b.NombreBombon, 
+            var listaProductos=new List< ProductoListDto>();
+
+            if (tipoProducto==TipoProducto.Bombon)
+            {
+                var selectQuery = @"SELECT b.BombonId AS ProductoId, 
+                                   b.NombreBombon AS Nombre, 
                                    tc.Descripcion AS TipoDeChocolate, 
                                    tn.Descripcion AS TipoDeNuez, 
                                    tr.Descripcion AS TipoDeRelleno, 
@@ -166,12 +205,29 @@ namespace Bombones.Datos.Repositorios
                             INNER JOIN TiposDeRellenos tr ON b.TipoDeRellenoId = tr.TipoDeRellenoId
                             INNER JOIN Fabricas f ON b.FabricaId = f.FabricaId
                             ORDER BY b.NombreBombon";
-            var lista = conn.Query<BombonListDto>(selectQuery).ToList();
+                var listaBombones = conn.Query<BombonListDto>(selectQuery).ToList();
+                listaProductos.AddRange(listaBombones);
+
+            }
+            if (tipoProducto == TipoProducto.Caja)
+            {
+                var selectQuery = @"SELECT c.CajaId AS ProductoId,
+		                        c.NombreCaja AS Nombre,
+		                        (SELECT COUNT(*) FROM DetallesCajas dc WHERE dc.cajaId=c.CajaId) AS Variedades,
+		                        (SELECT SUM(dc.Cantidad) FROM DetallesCajas dc WHERE dc.CajaId=c.CajaId) as CantidadBombones,
+		                        c.PrecioVenta AS Precio,
+		                        c.Stock,
+		                        c.Suspendido
+                        FROM Cajas c";
+                var listaCajas = conn.Query<CajaListDto>(selectQuery).ToList();
+                listaProductos.AddRange(listaCajas);
+
+            }
             if (filter != null)
             {
-                lista = lista.Where(filter).ToList();
+                listaProductos = listaProductos.Where(filter).ToList();
             }
-            return lista.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            return listaProductos.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
         }
 
         public int GetPaginaPorRegistro(SqlConnection conn, string nombreBombon, int pageSize)

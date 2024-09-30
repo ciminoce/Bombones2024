@@ -87,5 +87,11 @@ namespace Bombones.Windows
             frmFormasDePago frm = new frmFormasDePago();
             frm.ShowDialog();
         }
+
+        private void btnCajas_Click(object sender, EventArgs e)
+        {
+            frmCajas frm=new frmCajas(_serviceProvider);
+            frm.ShowDialog();
+        }
     }
 }

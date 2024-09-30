@@ -133,6 +133,7 @@
             btnCajas.TabIndex = 0;
             btnCajas.Text = "Cajas";
             btnCajas.UseVisualStyleBackColor = true;
+            btnCajas.Click += btnCajas_Click;
             // 
             // btnUsuarios
             // 

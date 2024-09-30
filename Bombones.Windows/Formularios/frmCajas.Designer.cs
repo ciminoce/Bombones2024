@@ -31,6 +31,14 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panelNavegacion = new Panel();
+            txtCantidadPaginas = new TextBox();
+            cboPaginas = new ComboBox();
+            label2 = new Label();
+            label1 = new Label();
+            btnUltimo = new Button();
+            btnSiguiente = new Button();
+            btnAnterior = new Button();
+            btnPrimero = new Button();
             toolStrip1 = new ToolStrip();
             tsbNuevo = new ToolStripButton();
             tsbBorrar = new ToolStripButton();
@@ -44,16 +52,9 @@
             tsbImprimir = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
             tsbCerrar = new ToolStripButton();
-            txtCantidadPaginas = new TextBox();
-            cboPaginas = new ComboBox();
-            label2 = new Label();
-            label1 = new Label();
-            btnUltimo = new Button();
-            btnSiguiente = new Button();
-            btnAnterior = new Button();
-            btnPrimero = new Button();
             panel1 = new Panel();
             dgvDatos = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
             colCaja = new DataGridViewTextBoxColumn();
             colCantidadbombones = new DataGridViewTextBoxColumn();
             colVariedades = new DataGridViewTextBoxColumn();
@@ -81,6 +82,86 @@
             panelNavegacion.Name = "panelNavegacion";
             panelNavegacion.Size = new Size(921, 89);
             panelNavegacion.TabIndex = 7;
+            // 
+            // txtCantidadPaginas
+            // 
+            txtCantidadPaginas.Location = new Point(175, 24);
+            txtCantidadPaginas.Name = "txtCantidadPaginas";
+            txtCantidadPaginas.ReadOnly = true;
+            txtCantidadPaginas.Size = new Size(85, 23);
+            txtCantidadPaginas.TabIndex = 35;
+            // 
+            // cboPaginas
+            // 
+            cboPaginas.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboPaginas.FormattingEnabled = true;
+            cboPaginas.Location = new Point(72, 24);
+            cboPaginas.Name = "cboPaginas";
+            cboPaginas.Size = new Size(68, 23);
+            cboPaginas.TabIndex = 34;
+            cboPaginas.SelectedIndexChanged += cboPaginas_SelectedIndexChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(146, 27);
+            label2.Name = "label2";
+            label2.Size = new Size(23, 15);
+            label2.TabIndex = 32;
+            label2.Text = "de:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(33, 27);
+            label1.Name = "label1";
+            label1.Size = new Size(33, 15);
+            label1.TabIndex = 33;
+            label1.Text = "Pág.:";
+            // 
+            // btnUltimo
+            // 
+            btnUltimo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnUltimo.Image = Properties.Resources.last_24px;
+            btnUltimo.Location = new Point(812, 24);
+            btnUltimo.Name = "btnUltimo";
+            btnUltimo.Size = new Size(75, 41);
+            btnUltimo.TabIndex = 28;
+            btnUltimo.UseVisualStyleBackColor = true;
+            btnUltimo.Click += btnUltimo_Click;
+            // 
+            // btnSiguiente
+            // 
+            btnSiguiente.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSiguiente.Image = Properties.Resources.next_24px;
+            btnSiguiente.Location = new Point(731, 24);
+            btnSiguiente.Name = "btnSiguiente";
+            btnSiguiente.Size = new Size(75, 41);
+            btnSiguiente.TabIndex = 29;
+            btnSiguiente.UseVisualStyleBackColor = true;
+            btnSiguiente.Click += btnSiguiente_Click;
+            // 
+            // btnAnterior
+            // 
+            btnAnterior.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAnterior.Image = Properties.Resources.previous_24px;
+            btnAnterior.Location = new Point(650, 24);
+            btnAnterior.Name = "btnAnterior";
+            btnAnterior.Size = new Size(75, 41);
+            btnAnterior.TabIndex = 30;
+            btnAnterior.UseVisualStyleBackColor = true;
+            btnAnterior.Click += btnAnterior_Click;
+            // 
+            // btnPrimero
+            // 
+            btnPrimero.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnPrimero.Image = Properties.Resources.first_24px;
+            btnPrimero.Location = new Point(569, 24);
+            btnPrimero.Name = "btnPrimero";
+            btnPrimero.Size = new Size(75, 41);
+            btnPrimero.TabIndex = 31;
+            btnPrimero.UseVisualStyleBackColor = true;
+            btnPrimero.Click += btnPrimero_Click;
             // 
             // toolStrip1
             // 
@@ -196,81 +277,6 @@
             tsbCerrar.TextImageRelation = TextImageRelation.ImageAboveText;
             tsbCerrar.Click += tsbCerrar_Click;
             // 
-            // txtCantidadPaginas
-            // 
-            txtCantidadPaginas.Location = new Point(175, 24);
-            txtCantidadPaginas.Name = "txtCantidadPaginas";
-            txtCantidadPaginas.ReadOnly = true;
-            txtCantidadPaginas.Size = new Size(85, 23);
-            txtCantidadPaginas.TabIndex = 35;
-            // 
-            // cboPaginas
-            // 
-            cboPaginas.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboPaginas.FormattingEnabled = true;
-            cboPaginas.Location = new Point(72, 24);
-            cboPaginas.Name = "cboPaginas";
-            cboPaginas.Size = new Size(68, 23);
-            cboPaginas.TabIndex = 34;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(146, 27);
-            label2.Name = "label2";
-            label2.Size = new Size(23, 15);
-            label2.TabIndex = 32;
-            label2.Text = "de:";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(33, 27);
-            label1.Name = "label1";
-            label1.Size = new Size(33, 15);
-            label1.TabIndex = 33;
-            label1.Text = "Pág.:";
-            // 
-            // btnUltimo
-            // 
-            btnUltimo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnUltimo.Image = Properties.Resources.last_24px;
-            btnUltimo.Location = new Point(812, 24);
-            btnUltimo.Name = "btnUltimo";
-            btnUltimo.Size = new Size(75, 41);
-            btnUltimo.TabIndex = 28;
-            btnUltimo.UseVisualStyleBackColor = true;
-            // 
-            // btnSiguiente
-            // 
-            btnSiguiente.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSiguiente.Image = Properties.Resources.next_24px;
-            btnSiguiente.Location = new Point(731, 24);
-            btnSiguiente.Name = "btnSiguiente";
-            btnSiguiente.Size = new Size(75, 41);
-            btnSiguiente.TabIndex = 29;
-            btnSiguiente.UseVisualStyleBackColor = true;
-            // 
-            // btnAnterior
-            // 
-            btnAnterior.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAnterior.Image = Properties.Resources.previous_24px;
-            btnAnterior.Location = new Point(650, 24);
-            btnAnterior.Name = "btnAnterior";
-            btnAnterior.Size = new Size(75, 41);
-            btnAnterior.TabIndex = 30;
-            btnAnterior.UseVisualStyleBackColor = true;
-            // 
-            // btnPrimero
-            // 
-            btnPrimero.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnPrimero.Image = Properties.Resources.first_24px;
-            btnPrimero.Location = new Point(569, 24);
-            btnPrimero.Name = "btnPrimero";
-            btnPrimero.Size = new Size(75, 41);
-            btnPrimero.TabIndex = 31;
-            btnPrimero.UseVisualStyleBackColor = true;
-            // 
             // panel1
             // 
             panel1.Controls.Add(dgvDatos);
@@ -287,7 +293,7 @@
             dataGridViewCellStyle1.BackColor = Color.FromArgb(224, 224, 224);
             dgvDatos.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colCaja, colCantidadbombones, colVariedades, colStock, colPrecioVta, colSuspendido });
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colId, colCaja, colCantidadbombones, colVariedades, colStock, colPrecioVta, colSuspendido });
             dgvDatos.Dock = DockStyle.Fill;
             dgvDatos.Location = new Point(0, 0);
             dgvDatos.MultiSelect = false;
@@ -297,6 +303,13 @@
             dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDatos.Size = new Size(921, 299);
             dgvDatos.TabIndex = 1;
+            // 
+            // colId
+            // 
+            colId.HeaderText = "Id";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Visible = false;
             // 
             // colCaja
             // 
@@ -394,6 +407,7 @@
         private Button btnPrimero;
         private Panel panel1;
         private DataGridView dgvDatos;
+        private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colCaja;
         private DataGridViewTextBoxColumn colCantidadbombones;
         private DataGridViewTextBoxColumn colVariedades;

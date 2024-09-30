@@ -1,17 +1,18 @@
 ﻿using Bombones.Datos.Interfaces;
 using Bombones.Entidades.Dtos;
 using Bombones.Entidades.Entidades;
+using Bombones.Entidades.Enumeraciones;
 using Bombones.Servicios.Intefaces;
 using System.Data.SqlClient;
 
 namespace Bombones.Servicios.Servicios
 {
-    public class ServiciosBombones : IServiciosBombones
+    public class ServiciosProductos : IServiciosProductos
     {
-        private readonly IRepositorioBombones? _repositorio;
+        private readonly IRepositorioProductos? _repositorio;
         private readonly string? _cadena;
 
-        public ServiciosBombones(IRepositorioBombones? repositorio,
+        public ServiciosProductos(IRepositorioProductos? repositorio,
             string? cadena)
         {
             _repositorio = repositorio ?? throw new ApplicationException("Dependencias no cargadas!!!"); ;
@@ -68,23 +69,23 @@ namespace Bombones.Servicios.Servicios
 
         }
 
-        public int GetCantidad(Func<BombonListDto, bool>? filter = null)
+        public int GetCantidad(TipoProducto tipoProducto,Func<ProductoListDto, bool>? filter = null)
         {
             using(var conn=new SqlConnection(_cadena))
             {
                 conn.Open();
-                return _repositorio!.GetCantidad(conn, filter);
+                return _repositorio!.GetCantidad(conn, tipoProducto, filter);
             }
         }
 
 
-        public List<BombonListDto> GetLista(int currentPage, int pageSize, 
-            Func<BombonListDto, bool>? filter = null)
+        public List<ProductoListDto> GetLista( int currentPage, int pageSize, TipoProducto tipoProducto,
+            Func<ProductoListDto, bool>? filter = null)
         {
             using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
-                return _repositorio!.GetLista(conn,currentPage,pageSize,filter);
+                return _repositorio!.GetLista(conn,  currentPage,pageSize, tipoProducto, filter);
             }
         }
 

@@ -21,7 +21,7 @@ namespace Bombones.Windows.Formularios
             try
             {
                 lista = _servicio!.GetLista();
-                MostrarDatosEnGrilla();
+                GridHelper.MostrarDatosEnGrilla<TipoDeNuez>(lista,dgvDatos);
             }
             catch (Exception)
             {
@@ -30,20 +30,7 @@ namespace Bombones.Windows.Formularios
             }
         }
 
-        private void MostrarDatosEnGrilla()
-        {
-            GridHelper.LimpiarGrilla(dgvDatos);
-            if (lista is not null)
-            {
-                foreach (var item in lista)
-                {
-                    var r = GridHelper.ConstruirFila(dgvDatos);
-                    GridHelper.SetearFila(r, item);
-                    GridHelper.AgregarFila(r, dgvDatos);
-                }
-
-            }
-        }
+        
 
 
 

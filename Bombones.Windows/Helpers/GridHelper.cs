@@ -5,6 +5,16 @@ namespace Bombones.Windows.Helpers
 {
     public static class GridHelper
     {
+        public static void MostrarDatosEnGrilla<T>(List<T> lista, DataGridView dgv) where T : class
+        {
+            LimpiarGrilla(dgv);
+            foreach (var item in lista)
+            {
+                var r = ConstruirFila(dgv);
+                SetearFila(r,item);
+                AgregarFila(r, dgv);
+            }
+        }
         public static void LimpiarGrilla(DataGridView grid)
         {
             grid.Rows.Clear();
@@ -69,8 +79,8 @@ namespace Bombones.Windows.Helpers
                     r.Cells[1].Value = telefono.ToString();
                     break;
                 case BombonListDto bombon:
-                    r.Cells[0].Value = bombon.BombonId;
-                    r.Cells[1].Value = bombon.NombreBombon;
+                    r.Cells[0].Value = bombon.ProductoId;
+                    r.Cells[1].Value = bombon.Nombre;
                     r.Cells[2].Value = bombon.TipoDeChocolate;
                     r.Cells[3].Value = bombon.TipoDeRelleno;
                     r.Cells[4].Value = bombon.TipoDeNuez;
@@ -95,7 +105,17 @@ namespace Bombones.Windows.Helpers
                     r.Cells[1].Value = telefono.TipoTelefono;
                     r.Cells[2].Value = telefono.Numero;
                     break;
-
+                case CajaListDto caja:
+                    r.Cells[0].Value = caja.ProductoId;
+                    r.Cells[1].Value = caja.Nombre;
+                    r.Cells[2].Value = caja.Variedades;
+                    r.Cells[3].Value = caja.CantidadBombones;
+                    r.Cells[4].Value = caja.Stock;
+                    r.Cells[5].Value = caja.Precio;
+                    r.Cells[6].Value = caja.Suspendido;
+                    break;
+                    r.Cells[6].Value = caja.Stock;
+                    r.Cells[7].Value = caja.Precio;
 
                 default:
                     break;
