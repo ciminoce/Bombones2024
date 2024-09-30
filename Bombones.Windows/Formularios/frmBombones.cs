@@ -325,7 +325,9 @@ namespace Bombones.Windows.Formularios
 
         }
 
+        private void tsbFiltrar_Click(object sender, EventArgs e)
+        {
 
-
+        }
     }
 }

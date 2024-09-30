@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmManejarBombonCajaAE));
             nudCantidad = new NumericUpDown();
             label2 = new Label();
@@ -35,7 +36,9 @@
             label1 = new Label();
             btnCancelar = new Button();
             btnOk = new Button();
+            errorProvider1 = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)nudCantidad).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // nudCantidad
@@ -96,6 +99,10 @@
             btnOk.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOk.UseVisualStyleBackColor = true;
             // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
             // frmManejarBombonCajaAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -111,6 +118,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmManejarBombonCajaAE";
             ((System.ComponentModel.ISupportInitialize)nudCantidad).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -123,5 +131,6 @@
         private Label label1;
         private Button btnCancelar;
         private Button btnOk;
+        private ErrorProvider errorProvider1;
     }
 }

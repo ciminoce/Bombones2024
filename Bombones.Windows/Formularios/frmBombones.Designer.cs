@@ -126,18 +126,19 @@ namespace Bombones.Windows.Formularios
             tsbFiltrar.Size = new Size(53, 59);
             tsbFiltrar.Text = "Filtrar";
             tsbFiltrar.TextImageRelation = TextImageRelation.ImageAboveText;
+            tsbFiltrar.Click += tsbFiltrar_Click;
             // 
             // nombreBombónToolStripMenuItem
             // 
             nombreBombónToolStripMenuItem.Name = "nombreBombónToolStripMenuItem";
-            nombreBombónToolStripMenuItem.Size = new Size(167, 22);
+            nombreBombónToolStripMenuItem.Size = new Size(180, 22);
             nombreBombónToolStripMenuItem.Text = "Nombre Bombón";
             nombreBombónToolStripMenuItem.Click += nombreBombónToolStripMenuItem_Click;
             // 
             // variosToolStripMenuItem
             // 
             variosToolStripMenuItem.Name = "variosToolStripMenuItem";
-            variosToolStripMenuItem.Size = new Size(167, 22);
+            variosToolStripMenuItem.Size = new Size(180, 22);
             variosToolStripMenuItem.Text = "Varios";
             // 
             // tsbActualizar
