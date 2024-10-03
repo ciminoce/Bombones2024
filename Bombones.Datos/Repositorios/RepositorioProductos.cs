@@ -9,9 +9,11 @@ namespace Bombones.Datos.Repositorios
 {
     public class RepositorioProductos : IRepositorioProductos
     {
-        public void Agregar(Bombon bombon, SqlConnection conn, SqlTransaction tran)
+        public void Agregar(Producto producto, SqlConnection conn, SqlTransaction tran)
         {
-            var insertQuery = @"INSERT INTO Bombones (NombreBombon, Descripcion, TipoDeChocolateId, 
+            if (producto is Bombon bombon)
+            {
+                var insertQuery = @"INSERT INTO Bombones (NombreBombon, Descripcion, TipoDeChocolateId, 
                         TipoDeNuezId, TipoDeRellenoId, PrecioCosto, PrecioVenta, Stock, 
                         NivelDeReposicion, Imagen, FabricaId, Suspendido) VALUES 
                         (@NombreBombon, @Descripcion, @TipoDeChocolateId, @TipoDeNuezId, 
@@ -19,47 +21,95 @@ namespace Bombones.Datos.Repositorios
                         @NivelDeReposicion, @Imagen, @FabricaId, @Suspendido); 
                         SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            int primaryKey = conn.QuerySingle<int>(insertQuery, new
-            {
-                NombreBombon = bombon.Nombre, 
-                Descripcion = bombon.Descripcion,
-                TipoDeChocolateId = bombon.TipoDeChocolateId,
-                TipoDeNuezId = bombon.TipoDeNuezId,
-                TipoDeRellenoId = bombon.TipoDeRellenoId,
-                PrecioCosto = bombon.PrecioCosto,
-                PrecioVenta = bombon.PrecioVenta,
-                Stock = bombon.Stock,
-                NivelDeReposicion = bombon.NivelDeReposicion,
-                Imagen = bombon.Imagen,
-                FabricaId = bombon.FabricaId,
-                Suspendido = bombon.Suspendido
-            }, tran);
+                int primaryKey = conn.QuerySingle<int>(insertQuery, new
+                {
+                    NombreBombon = bombon.Nombre,
+                    Descripcion = bombon.Descripcion,
+                    TipoDeChocolateId = bombon.TipoDeChocolateId,
+                    TipoDeNuezId = bombon.TipoDeNuezId,
+                    TipoDeRellenoId = bombon.TipoDeRellenoId,
+                    PrecioCosto = bombon.PrecioCosto,
+                    PrecioVenta = bombon.PrecioVenta,
+                    Stock = bombon.Stock,
+                    NivelDeReposicion = bombon.NivelDeReposicion,
+                    Imagen = bombon.Imagen,
+                    FabricaId = bombon.FabricaId,
+                    Suspendido = bombon.Suspendido
+                }, tran);
 
-            if (primaryKey > 0)
-            {
-                bombon.ProductoId = primaryKey;
-                return;
+                if (primaryKey > 0)
+                {
+                    bombon.ProductoId = primaryKey;
+                    return;
+                }
+                throw new Exception("No se pudo agregar el bombón");
+
             }
-            throw new Exception("No se pudo agregar el bombón");
+            if(producto is Caja caja)
+            {
+                var insertQuery = @"INSERT INTO Cajas (NombreCaja, Descripcion, PrecioCosto, PrecioVenta, Stock, 
+                        NivelDeReposicion, Imagen, Suspendido) VALUES 
+                        (@NombreCaja, @Descripcion,  @PrecioCosto, @PrecioVenta, @Stock, 
+                        @NivelDeReposicion, @Imagen, @Suspendido); 
+                        SELECT CAST(SCOPE_IDENTITY() as int)";
+
+                int primaryKey = conn.QuerySingle<int>(insertQuery, new
+                {
+                    NombreCaja = caja.Nombre,
+                    Descripcion = caja.Descripcion,
+                    PrecioCosto = caja.PrecioCosto,
+                    PrecioVenta = caja.PrecioVenta,
+                    Stock = caja.Stock,
+                    NivelDeReposicion = caja.NivelDeReposicion,
+                    Imagen = caja.Imagen,
+                    Suspendido = caja.Suspendido
+                }, tran);
+
+                if (primaryKey > 0)
+                {
+                    caja.ProductoId = primaryKey;
+                    return;
+                }
+                throw new Exception("No se pudo agregar la caja");
+
+
+            }
         }
 
 
-        public void Borrar(int bombonId, SqlConnection conn, SqlTransaction tran)
+        public void Borrar(TipoProducto tipoProducto, int productoId, SqlConnection conn, SqlTransaction tran)
         {
-            var deleteQuery = @"DELETE FROM Bombones 
+            if (tipoProducto is TipoProducto.Bombon)
+            {
+                var deleteQuery = @"DELETE FROM Bombones 
                 WHERE BombonId=@BombonId";
-            int registrosAfectados = conn
-                .Execute(deleteQuery, new { @BombonId = bombonId }, tran);
-            if (registrosAfectados == 0)
-            {
-                throw new Exception("No se pudo borrar el bombón");
-            }
+                int registrosAfectados = conn
+                    .Execute(deleteQuery, new { @BombonId = productoId }, tran);
+                if (registrosAfectados == 0)
+                {
+                    throw new Exception("No se pudo borrar el bombón");
+                }
 
+            }
+            else
+            {
+                var deleteQuery = @"DELETE FROM Cajas 
+                    WHERE CajaId=@CajaId";
+                int registrosAfectados = conn
+                    .Execute(deleteQuery, new { @CajaId = productoId }, tran);
+                if (registrosAfectados == 0)
+                {
+                    throw new Exception("No se pudo borrar la caja");
+                }
+
+            }
         }
 
-        public void Editar(Bombon bombon, SqlConnection conn, SqlTransaction tran)
+        public void Editar(Producto producto, SqlConnection conn, SqlTransaction tran)
         {
-            var updateQuery = @"UPDATE Bombones SET 
+            if (producto is Bombon bombon)
+            {
+                var updateQuery = @"UPDATE Bombones SET 
                         NombreBombon = @Nombre, 
                         Descripcion = @Descripcion, 
                         TipoDeChocolateId = @TipoDeChocolateId, 
@@ -74,69 +124,143 @@ namespace Bombones.Datos.Repositorios
                         Suspendido = @Suspendido 
                         WHERE BombonId = @ProductoId";
 
-            int registrosAfectados = conn.Execute(updateQuery, new
-            {
-                bombon.Nombre,
-                bombon.Descripcion,
-                bombon.TipoDeChocolateId,
-                bombon.TipoDeNuezId,
-                bombon.TipoDeRellenoId,
-                bombon.PrecioCosto,
-                bombon.PrecioVenta,
-                bombon.Stock,
-                bombon.NivelDeReposicion,
-                bombon.Imagen,
-                bombon.FabricaId,
-                bombon.Suspendido,
-                bombon.ProductoId // BombonId corresponde a ProductoId en tu clase Bombon
-            }, tran);
+                int registrosAfectados = conn.Execute(updateQuery, new
+                {
+                    bombon.Nombre,
+                    bombon.Descripcion,
+                    bombon.TipoDeChocolateId,
+                    bombon.TipoDeNuezId,
+                    bombon.TipoDeRellenoId,
+                    bombon.PrecioCosto,
+                    bombon.PrecioVenta,
+                    bombon.Stock,
+                    bombon.NivelDeReposicion,
+                    bombon.Imagen,
+                    bombon.FabricaId,
+                    bombon.Suspendido,
+                    bombon.ProductoId // BombonId corresponde a ProductoId en tu clase Bombon
+                }, tran);
 
-            if (registrosAfectados == 0)
-            {
-                throw new Exception("No se pudo editar el bombón");
+                if (registrosAfectados == 0)
+                {
+                    throw new Exception("No se pudo editar el bombón");
+                }
+
             }
         }
 
-        public bool EstaRelacionado(int bombonId, SqlConnection conn)
+        public bool EstaRelacionado(TipoProducto tipoProducto, int productoId, SqlConnection conn)
         {
-            var selectQuery = @"SELECT COUNT(*) FROM DetallesVentas 
+            if (tipoProducto is TipoProducto.Bombon)
+            {
+                var selectQuery = @"SELECT COUNT(*) FROM DetallesVentas 
                 WHERE BombonId=@BombonId";
-            return conn.QuerySingle<int>
-                (selectQuery, new { @BombonId = bombonId }) > 0;
-        }
+                return conn.QuerySingle<int>
+                    (selectQuery, new { @BombonId = productoId }) > 0;
 
-        public bool Existe(Bombon bombon, SqlConnection conn)
-        {
-            var selectQuery = "SELECT COUNT(*) FROM Bombones WHERE NombreBombon = @Nombre";
-            if (bombon.ProductoId != 0)
-            {
-                selectQuery += " AND BombonId<>@ProductoId";
             }
-            
-            return conn.QuerySingle<int>(selectQuery, bombon) > 0;
+            else if(tipoProducto is TipoProducto.Caja)
+            {
+                var selectQuery = @"SELECT COUNT(*) FROM DetallesVentas 
+                WHERE CajaId=@CajaId";
+                return conn.QuerySingle<int>
+                    (selectQuery, new { @CajaId = productoId }) > 0;
 
+            }
+            return false;
         }
 
-        public Bombon? GetBombonPorId(int bombonId, SqlConnection conn)
+        public bool Existe(Producto producto, SqlConnection conn)
         {
-            string selectQuery = @"SELECT 
-                            BombonId AS ProductoId, 
-                            NombreBombon AS Nombre, 
-                            Descripcion, 
-                            TipoDeChocolateId, 
-                            TipoDeNuezId, 
-                            TipoDeRellenoId, 
-                            PrecioCosto, 
-                            PrecioVenta, 
-                            Stock, 
-                            NivelDeReposicion, 
-                            Imagen, 
-                            FabricaId, 
-                            Suspendido 
-                          FROM Bombones 
-                          WHERE BombonId=@BombonId";
+            if (producto is Bombon bombon)
+            {
+                var selectQuery = "SELECT COUNT(*) FROM Bombones WHERE NombreBombon = @Nombre";
+                if (bombon.ProductoId != 0)
+                {
+                    selectQuery += " AND BombonId<>@ProductoId";
+                }
 
-            return conn.QuerySingleOrDefault<Bombon>(selectQuery, new { @BombonId = bombonId });
+                return conn.QuerySingle<int>(selectQuery, bombon) > 0;
+
+            }else if(producto is Caja caja)
+            {
+                var selectQuery = "SELECT COUNT(*) FROM Cajas WHERE NombreCaja = @Nombre";
+                if (caja.ProductoId != 0)
+                {
+                    selectQuery += " AND CajaId<>@ProductoId";
+                }
+
+                return conn.QuerySingle<int>(selectQuery, caja) > 0;
+
+            }
+            return false;
+        }
+
+        public Producto? GetProductoPorId(TipoProducto tipoProducto, int productoId, SqlConnection conn)
+        {
+            if(tipoProducto is TipoProducto.Bombon)
+            {
+                string selectQuery = @"SELECT 
+                        BombonId AS ProductoId, 
+                        NombreBombon AS Nombre, 
+                        Descripcion, 
+                        TipoDeChocolateId, 
+                        TipoDeNuezId, 
+                        TipoDeRellenoId, 
+                        PrecioCosto, 
+                        PrecioVenta, 
+                        Stock, 
+                        NivelDeReposicion, 
+                        Imagen, 
+                        FabricaId, 
+                        Suspendido 
+                        FROM Bombones 
+                        WHERE BombonId=@BombonId";
+
+                return conn.QuerySingleOrDefault<Bombon>(selectQuery, new { @BombonId = productoId });
+
+            }else if(tipoProducto is TipoProducto.Caja)
+            {
+                string selectQuery = @"SELECT 
+                           c.CajaId AS ProductoId, 
+                           c.NombreCaja AS Nombre, 
+                           c.Descripcion, 
+                           c.PrecioCosto, 
+                           c.PrecioVenta AS Precio, 
+                           c.Stock, 
+                           c.NivelDeReposicion, 
+                           c.Imagen, 
+                           c.Suspendido,
+						   dc.DetalleCajaId,
+						   dc.CajaId,
+						   dc.BombonId,
+						   dc.Cantidad,
+						   b.BombonId As ProductoId,
+						   b.NombreBombon As Nombre
+						   FROM Cajas c
+						   INNER JOIN DetallesCajas dc ON c.CajaId=dc.CajaId
+						   INNER JOIN Bombones b ON b.BombonId=dc.BombonId
+						WHERE c.CajaId=@CajaId";
+                var cajaDictionary = new Dictionary<int, Caja>();
+                var resultado = conn.Query<Caja, DetalleCaja, Bombon, Caja>(
+                    selectQuery, (caja, detalle, bombon) =>
+                    {
+                        if (!cajaDictionary.TryGetValue(caja.ProductoId, out var cajaEntry))
+                        {
+                            cajaEntry = caja;
+                            cajaEntry.Detalles = new List<DetalleCaja>();
+                            cajaDictionary.Add(caja.ProductoId, cajaEntry);
+                        };
+                        detalle.Bombon = bombon;
+                        cajaEntry.Detalles.Add(detalle);
+                        return cajaEntry;
+
+
+                    }, new { @CajaId = productoId },
+                    splitOn: "DetalleCajaId,ProductoId");
+                return cajaDictionary.Values.FirstOrDefault();
+            }
+            return null;
         }
 
         public int GetCantidad(SqlConnection conn, TipoProducto tipoProducto, Func<ProductoListDto, bool>? filter = null, SqlTransaction? tran = null)
@@ -230,26 +354,65 @@ namespace Bombones.Datos.Repositorios
             return listaProductos.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
         }
 
-        public int GetPaginaPorRegistro(SqlConnection conn, string nombreBombon, int pageSize)
+        public int GetPaginaPorRegistro(SqlConnection conn, TipoProducto tipoProducto, string nombre, int pageSize)
         {
-            var positionQuery = @"
-                    WITH BombonOrdenado AS (
+            string positionQuery = string.Empty;
+            if(tipoProducto is TipoProducto.Bombon)
+            {
+                positionQuery = @"
+                        WITH BombonOrdenado AS (
+                        SELECT 
+                            ROW_NUMBER() OVER (ORDER BY NombreBombon) AS RowNum,
+                            NombreBombon
+                        FROM 
+                            Bombones
+                    )
                     SELECT 
-                        ROW_NUMBER() OVER (ORDER BY NombreBombon) AS RowNum,
-                        NombreBombon
+                        RowNum 
                     FROM 
-                        Bombones
-                )
-                SELECT 
-                    RowNum 
-                FROM 
-                    BombonOrdenado 
-                WHERE 
-                    NombreBombon = @NombreBombon";
+                        BombonOrdenado 
+                    WHERE 
+                        NombreBombon = @Nombre";
 
-            int position = conn.ExecuteScalar<int>(positionQuery, new { NombreBombon = nombreBombon });
+            }
+            else
+            {
+                positionQuery = @"
+                        WITH CajaOrdenada AS (
+                        SELECT 
+                            ROW_NUMBER() OVER (ORDER BY NombreCaja) AS RowNum,
+                            NombreCaja
+                        FROM 
+                            Cajas
+                    )
+                    SELECT 
+                        RowNum 
+                    FROM 
+                        CajaOrdenada 
+                    WHERE 
+                        NombreCaja = @Nombre";
+
+
+            }
+
+            int position = conn.ExecuteScalar<int>(positionQuery, new { Nombre = nombre });
             return (int)Math.Ceiling((decimal)position / pageSize);
 
         }
+
+        public List<Producto> GetListaProductos(SqlConnection conn)
+        {
+            var listaProductos = new List<Producto>();
+
+            var selectQuery = @"SELECT b.BombonId AS ProductoId, 
+                                   b.NombreBombon AS Nombre 
+                            FROM Bombones b WHERE b.Suspendido=0
+                            ORDER BY b.NombreBombon";
+                var listaBombones = conn.Query<Bombon>(selectQuery).ToList();
+                listaProductos.AddRange(listaBombones);
+
+            return listaProductos;
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Bombones.Entidades.Dtos;
+using Bombones.Entidades.Entidades;
 using Bombones.Entidades.Enumeraciones;
 using Bombones.Servicios.Intefaces;
 using Bombones.Windows.Helpers;
@@ -136,6 +137,44 @@ namespace Bombones.Windows.Formularios
 
         private void tsbNuevo_Click(object sender, EventArgs e)
         {
+            frmCajasAE frm = new frmCajasAE(_serviceProvider);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            try
+            {
+                Caja? caja = frm.GetCaja();
+                if (caja is null) return;
+                if (!_servicio!.Existe(caja))
+                {
+                    _servicio.Guardar(caja);
+
+
+                    totalRecords = _servicio?.GetCantidad(tipoProducto) ?? 0;
+                    totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                    currentPage = _servicio?.GetPaginaPorRegistro(tipoProducto, caja.Nombre, pageSize) ?? 0;
+                    LoadData();
+
+                    MessageBox.Show("Registro agregado",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Registro existente\nAlta denegada",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+
+            }
 
 
         }
@@ -158,6 +197,48 @@ namespace Bombones.Windows.Formularios
 
         private void tsbBorrar_Click(object sender, EventArgs e)
         {
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag is null) return;
+            var cajaDto = (CajaListDto)r.Tag;
+            DialogResult dr = MessageBox.Show($"¿Desea dar de baja la caja {cajaDto.Nombre}?",
+                "Confirmar",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+            if (dr == DialogResult.No) return;
+            try
+            {
+                if (!_servicio!.EstaRelacionado(tipoProducto,cajaDto.ProductoId))
+                {
+                    _servicio!.Borrar(tipoProducto,cajaDto.ProductoId);
+                    totalRecords = _servicio!.GetCantidad(tipoProducto);
+                    totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+                    if (currentPage > totalPages) currentPage = totalPages; // Ajustar la página actual si se reduce el total de páginas
+
+                    LoadData();
+                    MessageBox.Show("Registro eliminado",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Registro relacionado!!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
     }

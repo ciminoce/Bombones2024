@@ -10,16 +10,20 @@ namespace Bombones.Servicios.Servicios
     public class ServiciosProductos : IServiciosProductos
     {
         private readonly IRepositorioProductos? _repositorio;
+        private readonly IRepositorioDetallesCajas? _repositorioDetallesCajas;
         private readonly string? _cadena;
 
         public ServiciosProductos(IRepositorioProductos? repositorio,
+            IRepositorioDetallesCajas repositorioDetallesCajas,
             string? cadena)
         {
-            _repositorio = repositorio ?? throw new ApplicationException("Dependencias no cargadas!!!"); ;
+            _repositorio = repositorio ?? throw new ApplicationException("Dependencias no cargadas!!!");
+            _repositorioDetallesCajas = repositorioDetallesCajas ?? throw new ApplicationException("Dependencias no cargadas!!!");
+
             _cadena = cadena;
         }
 
-        public void Borrar(int bombonId)
+        public void Borrar(TipoProducto tipoProducto, int productoId)
         {
             using (var conn = new SqlConnection(_cadena))
             {
@@ -28,7 +32,12 @@ namespace Bombones.Servicios.Servicios
                 {
                     try
                     {
-                        _repositorio!.Borrar(bombonId, conn, tran);
+                        if (tipoProducto is TipoProducto.Caja)
+                        {
+                            _repositorioDetallesCajas!.Borrar(productoId, conn, tran);
+                        }
+                        _repositorio!.Borrar(tipoProducto, productoId, conn, tran);
+
                         tran.Commit();
                     }
                     catch (Exception)
@@ -40,38 +49,38 @@ namespace Bombones.Servicios.Servicios
             }
         }
 
-        public bool EstaRelacionado(int bombonId)
+        public bool EstaRelacionado(TipoProducto tipoProducto, int productoId)
         {
             using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
-                return _repositorio!.EstaRelacionado(bombonId, conn);
+                return _repositorio!.EstaRelacionado(tipoProducto, productoId, conn);
             }
 
         }
 
-        public bool Existe(Bombon bombon)
+        public bool Existe(Producto producto)
         {
             using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
-                return _repositorio!.Existe(bombon, conn);
+                return _repositorio!.Existe(producto, conn);
             }
 
         }
 
-        public Bombon? GetBombonPorId(int bombonId)
+        public Producto? GetProductoPorId(TipoProducto tipoProducto, int productoId)
         {
             using (var conn = new SqlConnection(_cadena))
             {
-                return _repositorio!.GetBombonPorId(bombonId, conn);
+                return _repositorio!.GetProductoPorId(tipoProducto,productoId, conn);
             }
 
         }
 
-        public int GetCantidad(TipoProducto tipoProducto,Func<ProductoListDto, bool>? filter = null)
+        public int GetCantidad(TipoProducto tipoProducto, Func<ProductoListDto, bool>? filter = null)
         {
-            using(var conn=new SqlConnection(_cadena))
+            using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
                 return _repositorio!.GetCantidad(conn, tipoProducto, filter);
@@ -79,28 +88,28 @@ namespace Bombones.Servicios.Servicios
         }
 
 
-        public List<ProductoListDto> GetLista( int currentPage, int pageSize, TipoProducto tipoProducto,
+        public List<ProductoListDto> GetLista(int currentPage, int pageSize, TipoProducto tipoProducto,
             Func<ProductoListDto, bool>? filter = null)
         {
             using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
-                return _repositorio!.GetLista(conn,  currentPage,pageSize, tipoProducto, filter);
+                return _repositorio!.GetLista(conn, currentPage, pageSize, tipoProducto, filter);
             }
         }
 
-        public int GetPaginaPorRegistro(string nombreBombon, int pageSize)
+        public int GetPaginaPorRegistro(TipoProducto tipoProducto, string nombre, int pageSize)
         {
             using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
                 return _repositorio!
-                    .GetPaginaPorRegistro(conn, nombreBombon, pageSize);
+                    .GetPaginaPorRegistro(conn, tipoProducto, nombre, pageSize);
             }
         }
 
 
-        public void Guardar(Bombon bombon)
+        public void Guardar(Producto producto)
         {
             using (var conn = new SqlConnection(_cadena))
             {
@@ -109,13 +118,21 @@ namespace Bombones.Servicios.Servicios
                 {
                     try
                     {
-                        if (bombon.ProductoId == 0)
+                        if (producto.ProductoId == 0)
                         {
-                            _repositorio!.Agregar(bombon, conn, tran);
+                            _repositorio!.Agregar(producto, conn, tran);
+                            if (producto is Caja caja)
+                            {
+                                foreach (var item in caja.Detalles)
+                                {
+                                    item.CajaId = caja.ProductoId;
+                                    _repositorioDetallesCajas!.Agregar(item, conn, tran);
+                                }
+                            }
                         }
                         else
                         {
-                            _repositorio!.Editar(bombon, conn, tran);
+                            _repositorio!.Editar(producto, conn, tran);
                         }
 
                         tran.Commit();//guarda efectivamente
@@ -126,6 +143,15 @@ namespace Bombones.Servicios.Servicios
                         throw;
                     }
                 }
+            }
+        }
+
+        public List<Producto> GetListaProductos()
+        {
+            using (var conn = new SqlConnection(_cadena))
+            {
+                conn.Open();
+                return _repositorio!.GetListaProductos(conn);
             }
         }
     }

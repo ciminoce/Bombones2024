@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCajasAE));
             panel1 = new Panel();
             txtNivel = new TextBox();
             label9 = new Label();
@@ -53,12 +52,13 @@
             btnOk = new Button();
             splitContainer1 = new SplitContainer();
             dgvDatos = new DataGridView();
-            colBombon = new DataGridViewTextBoxColumn();
-            colCantidad = new DataGridViewTextBoxColumn();
             btnEditarBombon = new Button();
             btnBorrarBombon = new Button();
             btnAgregarBombon = new Button();
             errorProvider1 = new ErrorProvider(components);
+            colId = new DataGridViewTextBoxColumn();
+            colBombon = new DataGridViewTextBoxColumn();
+            colCantidad = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -89,7 +89,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(999, 272);
+            panel1.Size = new Size(999, 256);
             panel1.TabIndex = 0;
             // 
             // txtNivel
@@ -248,9 +248,9 @@
             panel2.Controls.Add(btnCancelar);
             panel2.Controls.Add(btnOk);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 622);
+            panel2.Location = new Point(0, 523);
             panel2.Name = "panel2";
-            panel2.Size = new Size(999, 100);
+            panel2.Size = new Size(999, 96);
             panel2.TabIndex = 1;
             // 
             // btnCancelar
@@ -267,12 +267,12 @@
             // 
             // btnOk
             // 
-            btnOk.Image = (Image)resources.GetObject("btnOk.Image");
+            btnOk.Image = Properties.Resources.Aceptar;
             btnOk.Location = new Point(306, 23);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(289, 54);
             btnOk.TabIndex = 12;
-            btnOk.Text = "Ok";
+            btnOk.Text = "OK";
             btnOk.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOk.UseVisualStyleBackColor = true;
             btnOk.Click += btnOk_Click;
@@ -280,7 +280,7 @@
             // splitContainer1
             // 
             splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(0, 272);
+            splitContainer1.Location = new Point(0, 256);
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -292,7 +292,7 @@
             splitContainer1.Panel2.Controls.Add(btnEditarBombon);
             splitContainer1.Panel2.Controls.Add(btnBorrarBombon);
             splitContainer1.Panel2.Controls.Add(btnAgregarBombon);
-            splitContainer1.Size = new Size(999, 350);
+            splitContainer1.Size = new Size(999, 267);
             splitContainer1.SplitterDistance = 833;
             splitContainer1.TabIndex = 2;
             // 
@@ -301,27 +301,13 @@
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colBombon, colCantidad });
-            dgvDatos.Location = new Point(30, 0);
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colId, colBombon, colCantidad });
+            dgvDatos.Location = new Point(30, 6);
             dgvDatos.Name = "dgvDatos";
             dgvDatos.ReadOnly = true;
-            dgvDatos.RowTemplate.Height = 25;
             dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvDatos.Size = new Size(780, 301);
+            dgvDatos.Size = new Size(780, 249);
             dgvDatos.TabIndex = 0;
-            // 
-            // colBombon
-            // 
-            colBombon.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colBombon.HeaderText = "Bombón";
-            colBombon.Name = "colBombon";
-            colBombon.ReadOnly = true;
-            // 
-            // colCantidad
-            // 
-            colCantidad.HeaderText = "Cantidad";
-            colCantidad.Name = "colCantidad";
-            colCantidad.ReadOnly = true;
             // 
             // btnEditarBombon
             // 
@@ -363,15 +349,36 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
+            // colId
+            // 
+            colId.HeaderText = "Id";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Visible = false;
+            // 
+            // colBombon
+            // 
+            colBombon.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colBombon.HeaderText = "Bombón";
+            colBombon.Name = "colBombon";
+            colBombon.ReadOnly = true;
+            // 
+            // colCantidad
+            // 
+            colCantidad.HeaderText = "Cantidad";
+            colCantidad.Name = "colCantidad";
+            colCantidad.ReadOnly = true;
+            // 
             // frmCajasAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(999, 722);
+            ClientSize = new Size(999, 619);
             Controls.Add(splitContainer1);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Name = "frmCajasAE";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmCajasAE";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -414,11 +421,12 @@
         private Button btnOk;
         private SplitContainer splitContainer1;
         private DataGridView dgvDatos;
-        private DataGridViewTextBoxColumn colBombon;
-        private DataGridViewTextBoxColumn colCantidad;
         private Button btnAgregarBombon;
         private Button btnEditarBombon;
         private Button btnBorrarBombon;
         private ErrorProvider errorProvider1;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn colBombon;
+        private DataGridViewTextBoxColumn colCantidad;
     }
 }

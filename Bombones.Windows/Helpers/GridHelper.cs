@@ -114,8 +114,11 @@ namespace Bombones.Windows.Helpers
                     r.Cells[5].Value = caja.Precio;
                     r.Cells[6].Value = caja.Suspendido;
                     break;
-                    r.Cells[6].Value = caja.Stock;
-                    r.Cells[7].Value = caja.Precio;
+                case DetalleCaja detalle:
+                    r.Cells[0].Value = detalle.CajaId;
+                    r.Cells[1].Value = detalle.Bombon!.Nombre;
+                    r.Cells[2].Value = detalle.Cantidad;
+                    break;
 
                 default:
                     break;

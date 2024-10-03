@@ -179,5 +179,22 @@ namespace Bombones.Windows.Helpers
             cbo.ValueMember = "FabricaId";
             cbo.SelectedIndex = 0;
         }
+
+        public static void CargarComboBombones(ref ComboBox cbo, IServiceProvider? serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            IServiciosProductos? servicio = _serviceProvider?.GetService<IServiciosProductos>();
+            var lista = servicio?.GetListaProductos();
+            var defaultTipo = new Producto()
+            {
+                ProductoId = 0,
+                Nombre = "Seleccione"
+            };
+            lista?.Insert(0, defaultTipo);
+            cbo.DataSource = lista;
+            cbo.DisplayMember = "Nombre";
+            cbo.ValueMember = "ProductoId";
+            cbo.SelectedIndex = 0;
+        }
     }
 }

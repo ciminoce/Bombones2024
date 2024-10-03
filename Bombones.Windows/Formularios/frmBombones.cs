@@ -193,7 +193,7 @@ namespace Bombones.Windows.Formularios
 
                     totalRecords = _servicio?.GetCantidad(tipoProducto) ?? 0;
                     totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
-                    currentPage = _servicio?.GetPaginaPorRegistro(bombon.Nombre, pageSize) ?? 0;
+                    currentPage = _servicio?.GetPaginaPorRegistro(tipoProducto, bombon.Nombre, pageSize) ?? 0;
                     LoadData();
 
                     MessageBox.Show("Registro agregado",
@@ -236,9 +236,9 @@ namespace Bombones.Windows.Formularios
             if (dr == DialogResult.No) return;
             try
             {
-                if (!_servicio!.EstaRelacionado(bombonDto.ProductoId))
+                if (!_servicio!.EstaRelacionado(tipoProducto,bombonDto.ProductoId))
                 {
-                    _servicio!.Borrar(bombonDto.ProductoId);
+                    _servicio!.Borrar(tipoProducto,bombonDto.ProductoId);
                     totalRecords = _servicio!.GetCantidad(tipoProducto);
                     totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
                     if (currentPage > totalPages) currentPage = totalPages; // Ajustar la página actual si se reduce el total de páginas
@@ -274,10 +274,10 @@ namespace Bombones.Windows.Formularios
             var r = dgvDatos.SelectedRows[0];
             if (r.Tag == null) return;
             BombonListDto bombonDto = (BombonListDto)r.Tag;
-            Bombon? bombon = _servicio!?.GetBombonPorId(bombonDto.ProductoId);
+            Producto? bombon = _servicio!.GetProductoPorId(tipoProducto,bombonDto.ProductoId);
             if (bombon is null) return;
             frmBombonesAE frm = new frmBombonesAE(_serviceProvider) { Text = "Editar Bombon" };
-            frm.SetBombon(bombon);
+            frm.SetBombon((Bombon)bombon!);
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) return;
             bombon = frm.GetBombon();
@@ -288,13 +288,18 @@ namespace Bombones.Windows.Formularios
 
                 if (!_servicio!.Existe(bombon))
                 {
-                    _servicio!?.Guardar(bombon);
+                    _servicio!.Guardar(bombon);
 
 
-                    currentPage = _servicio!.GetPaginaPorRegistro(bombon.Nombre, pageSize);
+                    currentPage = _servicio!.GetPaginaPorRegistro(tipoProducto,bombon.Nombre, pageSize);
                     LoadData();
                     int row = GridHelper.ObtenerRowIndex(dgvDatos, bombon.ProductoId);
                     GridHelper.MarcarRow(dgvDatos, row);
+                    MessageBox.Show("Registro editado",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
                 }
                 else
                 {

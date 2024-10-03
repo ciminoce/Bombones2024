@@ -6,13 +6,14 @@ namespace Bombones.Servicios.Intefaces
 {
     public interface IServiciosProductos
     {
-        void Borrar(int bombonId);
-        bool EstaRelacionado(int bombonId);
-        bool Existe(Bombon bombon);
-        Bombon? GetBombonPorId(int bombonId);
+        void Borrar(TipoProducto tipoProducto, int productoId);
+        bool EstaRelacionado(TipoProducto tipoProducto, int productoId);
+        bool Existe(Producto producto);
+        Producto? GetProductoPorId(TipoProducto tipoProducto,int productoId);
         int GetCantidad(TipoProducto tipoProducto, Func<ProductoListDto, bool>? filter = null);
         List<ProductoListDto> GetLista(int currentPage, int pageSize,TipoProducto tipoProducto, Func<ProductoListDto, bool>? filter = null );
-        int GetPaginaPorRegistro(string nombreBombon, int pageSize);
-        void Guardar(Bombon bombon);
+        int GetPaginaPorRegistro(TipoProducto tipoProducto, string nombre, int pageSize);
+        void Guardar(Producto producto);
+        List<Producto> GetListaProductos();
     }
 }
