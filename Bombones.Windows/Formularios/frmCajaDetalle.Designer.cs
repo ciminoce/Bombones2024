@@ -40,9 +40,10 @@
             txtCaja = new TextBox();
             label1 = new Label();
             dgvDatos = new DataGridView();
+            btnCerrar = new Button();
+            colId = new DataGridViewTextBoxColumn();
             colBombon = new DataGridViewTextBoxColumn();
             colCantidad = new DataGridViewTextBoxColumn();
-            btnCerrar = new Button();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picImagen).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
@@ -148,13 +149,31 @@
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colBombon, colCantidad });
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colId, colBombon, colCantidad });
             dgvDatos.Location = new Point(8, 200);
             dgvDatos.Name = "dgvDatos";
             dgvDatos.ReadOnly = true;
             dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDatos.Size = new Size(780, 301);
             dgvDatos.TabIndex = 33;
+            // 
+            // btnCerrar
+            // 
+            btnCerrar.Image = Properties.Resources.Cancelar;
+            btnCerrar.Location = new Point(683, 507);
+            btnCerrar.Name = "btnCerrar";
+            btnCerrar.Size = new Size(105, 54);
+            btnCerrar.TabIndex = 34;
+            btnCerrar.Text = "Cerrar";
+            btnCerrar.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnCerrar.UseVisualStyleBackColor = true;
+            // 
+            // colId
+            // 
+            colId.HeaderText = "Id";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Visible = false;
             // 
             // colBombon
             // 
@@ -168,17 +187,6 @@
             colCantidad.HeaderText = "Cantidad";
             colCantidad.Name = "colCantidad";
             colCantidad.ReadOnly = true;
-            // 
-            // btnCerrar
-            // 
-            btnCerrar.Image = Properties.Resources.Cancelar;
-            btnCerrar.Location = new Point(683, 507);
-            btnCerrar.Name = "btnCerrar";
-            btnCerrar.Size = new Size(105, 54);
-            btnCerrar.TabIndex = 34;
-            btnCerrar.Text = "Cerrar";
-            btnCerrar.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnCerrar.UseVisualStyleBackColor = true;
             // 
             // frmCajaDetalle
             // 
@@ -220,8 +228,9 @@
         private TextBox txtCaja;
         private Label label1;
         private DataGridView dgvDatos;
+        private Button btnCerrar;
+        private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colBombon;
         private DataGridViewTextBoxColumn colCantidad;
-        private Button btnCerrar;
     }
 }

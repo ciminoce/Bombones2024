@@ -19,7 +19,7 @@ namespace Bombones.Windows.Formularios
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            CombosHelper.CargarComboClientes(ref cboClientes);
+            //CombosHelper.CargarComboClientes(ref cboClientes);
         }
 
         public Cliente? GetCliente()
