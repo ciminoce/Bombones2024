@@ -35,9 +35,7 @@
             btnOk = new Button();
             label10 = new Label();
             chkSuspendido = new CheckBox();
-            txtNivelDeReposicion = new TextBox();
             label9 = new Label();
-            txtStock = new TextBox();
             label7 = new Label();
             btnBuscarImagen = new Button();
             groupBox3 = new GroupBox();
@@ -60,11 +58,15 @@
             label1 = new Label();
             errorProvider1 = new ErrorProvider(components);
             openFileDialog1 = new OpenFileDialog();
+            nudStock = new NumericUpDown();
+            nudNivel = new NumericUpDown();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picImagen).BeginInit();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudStock).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudNivel).BeginInit();
             SuspendLayout();
             // 
             // cboFabricas
@@ -119,13 +121,6 @@
             chkSuspendido.Text = "Suspendido";
             chkSuspendido.UseVisualStyleBackColor = true;
             // 
-            // txtNivelDeReposicion
-            // 
-            txtNivelDeReposicion.Location = new Point(342, 402);
-            txtNivelDeReposicion.Name = "txtNivelDeReposicion";
-            txtNivelDeReposicion.Size = new Size(86, 23);
-            txtNivelDeReposicion.TabIndex = 24;
-            // 
             // label9
             // 
             label9.AutoSize = true;
@@ -134,13 +129,6 @@
             label9.Size = new Size(114, 15);
             label9.TabIndex = 21;
             label9.Text = "Nivel de Reposición:";
-            // 
-            // txtStock
-            // 
-            txtStock.Location = new Point(101, 402);
-            txtStock.Name = "txtStock";
-            txtStock.Size = new Size(86, 23);
-            txtStock.TabIndex = 23;
             // 
             // label7
             // 
@@ -338,19 +326,37 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
+            // nudStock
+            // 
+            nudStock.Location = new Point(101, 402);
+            nudStock.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudStock.Name = "nudStock";
+            nudStock.Size = new Size(72, 23);
+            nudStock.TabIndex = 28;
+            nudStock.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // nudNivel
+            // 
+            nudNivel.Location = new Point(330, 405);
+            nudNivel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudNivel.Name = "nudNivel";
+            nudNivel.Size = new Size(72, 23);
+            nudNivel.TabIndex = 28;
+            nudNivel.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
             // frmBombonesAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(713, 532);
+            Controls.Add(nudNivel);
+            Controls.Add(nudStock);
             Controls.Add(cboFabricas);
             Controls.Add(btnCancelar);
             Controls.Add(btnOk);
             Controls.Add(label10);
             Controls.Add(chkSuspendido);
-            Controls.Add(txtNivelDeReposicion);
             Controls.Add(label9);
-            Controls.Add(txtStock);
             Controls.Add(label7);
             Controls.Add(btnBuscarImagen);
             Controls.Add(groupBox3);
@@ -370,6 +376,8 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudStock).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudNivel).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -381,9 +389,7 @@
         private Button btnOk;
         private Label label10;
         private CheckBox chkSuspendido;
-        private TextBox txtNivelDeReposicion;
         private Label label9;
-        private TextBox txtStock;
         private Label label7;
         private Button btnBuscarImagen;
         private GroupBox groupBox3;
@@ -406,5 +412,7 @@
         private Label label1;
         private ErrorProvider errorProvider1;
         private OpenFileDialog openFileDialog1;
+        private NumericUpDown nudStock;
+        private NumericUpDown nudNivel;
     }
 }

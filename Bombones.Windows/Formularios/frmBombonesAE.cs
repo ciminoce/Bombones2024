@@ -34,8 +34,8 @@ namespace Bombones.Windows.Formularios
                 cboNueces.SelectedValue = bombon.TipoDeNuezId;
                 txtPrecioCosto.Text = bombon.PrecioCosto.ToString();
                 txtPrecioVta.Text = bombon.PrecioVenta.ToString();
-                txtStock.Text = bombon.Stock.ToString();
-                txtNivelDeReposicion.Text = bombon.NivelDeReposicion.ToString();
+                nudStock.Value = bombon.Stock;
+                nudNivel.Value = bombon.NivelDeReposicion;
                 cboFabricas.SelectedValue = bombon.FabricaId;
                 chkSuspendido.Checked = bombon.Suspendido;
 
@@ -85,22 +85,22 @@ namespace Bombones.Windows.Formularios
                 bombon.Nombre = txtBombon.Text;
                 bombon.Descripcion = txtDescripcion.Text;
 
-                bombon.TipoDeChocolateId = (int)cboChocolates.SelectedValue;
-                bombon.TipoDeRellenoId = (int)cboRellenos.SelectedValue;
-                bombon.TipoDeNuezId = (int)cboNueces.SelectedValue;
-                bombon.FabricaId = (int)cboFabricas.SelectedValue;
+                bombon.TipoDeChocolateId = (int)cboChocolates.SelectedValue!;
+                bombon.TipoDeRellenoId = (int)cboRellenos.SelectedValue!;
+                bombon.TipoDeNuezId = (int)cboNueces.SelectedValue!;
+                bombon.FabricaId = (int)cboFabricas.SelectedValue!;
 
                 bombon.PrecioCosto = decimal.Parse(txtPrecioCosto.Text);
                 bombon.PrecioVenta = decimal.Parse(txtPrecioVta.Text);
-                bombon.Stock = int.Parse(txtStock.Text);
-                bombon.NivelDeReposicion = int.Parse(txtNivelDeReposicion.Text);
+                bombon.Stock = (int)nudStock.Value;
+                bombon.NivelDeReposicion = (int)nudNivel.Value;
 
                 bombon.Suspendido = chkSuspendido.Checked;
 
-                bombon.TipoDeChocolate = (TipoDeChocolate)cboChocolates.SelectedItem;
-                bombon.TipoDeNuez = (TipoDeNuez)cboNueces.SelectedItem;
-                bombon.TipoDeRelleno = (TipoDeRelleno)cboRellenos.SelectedItem;
-                bombon.Fabrica = (Fabrica)cboFabricas.SelectedItem;
+                bombon.TipoDeChocolate = (TipoDeChocolate)cboChocolates.SelectedItem!;
+                bombon.TipoDeNuez = (TipoDeNuez)cboNueces.SelectedItem!;
+                bombon.TipoDeRelleno = (TipoDeRelleno)cboRellenos.SelectedItem!;
+                bombon.Fabrica = (Fabrica)cboFabricas.SelectedItem!;
 
 
                 //Veo si el producto tiene alguna imagen asociada
@@ -174,20 +174,6 @@ namespace Bombones.Windows.Formularios
                 valido = false;
                 errorProvider1.SetError(txtPrecioVta, "Precio de venta mal ingresado o no válido");
             }
-
-            if (!int.TryParse(txtStock.Text, out int stock) || stock <= 0)
-            {
-                valido = false;
-                errorProvider1.SetError(txtStock, "Stock mal ingresado o no válido");
-            }
-
-            if (!int.TryParse(txtNivelDeReposicion.Text, out int stockMinimo) || stockMinimo <= 0)
-            {
-                valido = false;
-                errorProvider1.SetError(txtStock, "Nivel de Reposición mal ingresado o no válido");
-            }
-
-
             return valido;
 
         }

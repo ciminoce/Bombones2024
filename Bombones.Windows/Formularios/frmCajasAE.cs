@@ -79,8 +79,8 @@ namespace Bombones.Windows.Formularios
                 caja.Descripcion = txtDescripcion.Text;
                 caja.PrecioCosto = decimal.Parse(txtPrecioCosto.Text);
                 caja.PrecioVenta=decimal.Parse(txtPrecioVta.Text);
-                caja.Stock = int.Parse(txtStock.Text);
-                caja.NivelDeReposicion = int.Parse(txtNivel.Text);
+                caja.Stock = (int)nudStock.Value;
+                caja.NivelDeReposicion = (int)nudNivel.Value;
 
                 DialogResult = DialogResult.OK;
             }
@@ -107,19 +107,6 @@ namespace Bombones.Windows.Formularios
                 valido = false;
                 errorProvider1.SetError(txtPrecioVta, "Precio de vta. mal ingresado");
             }
-            if (!int.TryParse(txtStock.Text, out int stock) ||
-                        (stock <= 0))
-            {
-                valido = false;
-                errorProvider1.SetError(txtStock, "Stock mal ingresado");
-            }
-            if (!int.TryParse(txtNivel.Text, out int nivel) ||
-                        (nivel <= 0))
-            {
-                valido = false;
-                errorProvider1.SetError(txtNivel, "Nivel mal ingresado");
-            }
-
 
             if (caja!.Detalles.Count==0)
             {

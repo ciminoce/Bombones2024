@@ -30,10 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
-            txtNivel = new TextBox();
-            label9 = new Label();
-            txtStock = new TextBox();
-            label7 = new Label();
             groupBox2 = new GroupBox();
             txtPrecioVta = new TextBox();
             txtPrecioCosto = new TextBox();
@@ -52,13 +48,17 @@
             btnOk = new Button();
             splitContainer1 = new SplitContainer();
             dgvDatos = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
+            colBombon = new DataGridViewTextBoxColumn();
+            colCantidad = new DataGridViewTextBoxColumn();
             btnEditarBombon = new Button();
             btnBorrarBombon = new Button();
             btnAgregarBombon = new Button();
             errorProvider1 = new ErrorProvider(components);
-            colId = new DataGridViewTextBoxColumn();
-            colBombon = new DataGridViewTextBoxColumn();
-            colCantidad = new DataGridViewTextBoxColumn();
+            nudNivel = new NumericUpDown();
+            nudStock = new NumericUpDown();
+            label9 = new Label();
+            label7 = new Label();
             panel1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -70,13 +70,15 @@
             splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudNivel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudStock).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.Controls.Add(txtNivel);
+            panel1.Controls.Add(nudNivel);
+            panel1.Controls.Add(nudStock);
             panel1.Controls.Add(label9);
-            panel1.Controls.Add(txtStock);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(groupBox2);
             panel1.Controls.Add(btnBuscarImagen);
@@ -91,38 +93,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(999, 256);
             panel1.TabIndex = 0;
-            // 
-            // txtNivel
-            // 
-            txtNivel.Location = new Point(394, 219);
-            txtNivel.Name = "txtNivel";
-            txtNivel.Size = new Size(86, 23);
-            txtNivel.TabIndex = 19;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(262, 224);
-            label9.Name = "label9";
-            label9.Size = new Size(114, 15);
-            label9.TabIndex = 17;
-            label9.Text = "Nivel de Reposición:";
-            // 
-            // txtStock
-            // 
-            txtStock.Location = new Point(153, 219);
-            txtStock.Name = "txtStock";
-            txtStock.Size = new Size(86, 23);
-            txtStock.TabIndex = 20;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(108, 222);
-            label7.Name = "label7";
-            label7.Size = new Size(39, 15);
-            label7.TabIndex = 18;
-            label7.Text = "Stock:";
             // 
             // groupBox2
             // 
@@ -309,6 +279,26 @@
             dgvDatos.Size = new Size(780, 249);
             dgvDatos.TabIndex = 0;
             // 
+            // colId
+            // 
+            colId.HeaderText = "Id";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Visible = false;
+            // 
+            // colBombon
+            // 
+            colBombon.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colBombon.HeaderText = "Bombón";
+            colBombon.Name = "colBombon";
+            colBombon.ReadOnly = true;
+            // 
+            // colCantidad
+            // 
+            colCantidad.HeaderText = "Cantidad";
+            colCantidad.Name = "colCantidad";
+            colCantidad.ReadOnly = true;
+            // 
             // btnEditarBombon
             // 
             btnEditarBombon.Image = Properties.Resources.edit_property_24px;
@@ -349,25 +339,41 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // colId
+            // nudNivel
             // 
-            colId.HeaderText = "Id";
-            colId.Name = "colId";
-            colId.ReadOnly = true;
-            colId.Visible = false;
+            nudNivel.Location = new Point(403, 216);
+            nudNivel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudNivel.Name = "nudNivel";
+            nudNivel.Size = new Size(72, 23);
+            nudNivel.TabIndex = 31;
+            nudNivel.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // colBombon
+            // nudStock
             // 
-            colBombon.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colBombon.HeaderText = "Bombón";
-            colBombon.Name = "colBombon";
-            colBombon.ReadOnly = true;
+            nudStock.Location = new Point(174, 213);
+            nudStock.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudStock.Name = "nudStock";
+            nudStock.Size = new Size(72, 23);
+            nudStock.TabIndex = 32;
+            nudStock.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // colCantidad
+            // label9
             // 
-            colCantidad.HeaderText = "Cantidad";
-            colCantidad.Name = "colCantidad";
-            colCantidad.ReadOnly = true;
+            label9.AutoSize = true;
+            label9.Location = new Point(283, 218);
+            label9.Name = "label9";
+            label9.Size = new Size(114, 15);
+            label9.TabIndex = 29;
+            label9.Text = "Nivel de Reposición:";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(129, 216);
+            label7.Name = "label7";
+            label7.Size = new Size(39, 15);
+            label7.TabIndex = 30;
+            label7.Text = "Stock:";
             // 
             // frmCajasAE
             // 
@@ -393,6 +399,8 @@
             splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvDatos).EndInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudNivel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudStock).EndInit();
             ResumeLayout(false);
         }
 
@@ -407,10 +415,6 @@
         private Button btnBuscarImagen;
         private GroupBox groupBox3;
         private PictureBox picImagen;
-        private TextBox txtNivel;
-        private Label label9;
-        private TextBox txtStock;
-        private Label label7;
         private GroupBox groupBox2;
         private TextBox txtPrecioVta;
         private TextBox txtPrecioCosto;
@@ -428,5 +432,9 @@
         private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colBombon;
         private DataGridViewTextBoxColumn colCantidad;
+        private NumericUpDown nudNivel;
+        private NumericUpDown nudStock;
+        private Label label9;
+        private Label label7;
     }
 }
