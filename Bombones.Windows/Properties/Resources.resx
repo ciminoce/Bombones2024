@@ -121,6 +121,9 @@
   <data name="view_details_40px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view_details_40px1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="search_40px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\search_40px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Buscar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Buscar1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -223,7 +226,7 @@
   <data name="numerical_sorting_12_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\numerical_sorting_12_16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="search_40px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\search_40px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="choco-balls" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\choco-balls.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
