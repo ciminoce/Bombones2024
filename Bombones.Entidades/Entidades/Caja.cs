@@ -24,5 +24,10 @@
         {
             return Detalles.Any(d=>d.BombonId==detalle.BombonId);   
         }
+
+        public void Eliminar(DetalleCaja detalle)
+        {
+            Detalles.Remove(detalle);
+        }
     }
 }

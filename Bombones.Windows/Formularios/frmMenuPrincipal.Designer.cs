@@ -43,6 +43,7 @@
             btnClientes = new Button();
             btnFormasDePago = new Button();
             btnFormasDeVenta = new Button();
+            btnVentas = new Button();
             SuspendLayout();
             // 
             // btnRellenos
@@ -195,6 +196,16 @@
             btnFormasDeVenta.UseVisualStyleBackColor = true;
             btnFormasDeVenta.Click += btnFormasDeVenta_Click;
             // 
+            // btnVentas
+            // 
+            btnVentas.Location = new Point(724, 492);
+            btnVentas.Name = "btnVentas";
+            btnVentas.Size = new Size(139, 123);
+            btnVentas.TabIndex = 0;
+            btnVentas.Text = "Ventas";
+            btnVentas.UseVisualStyleBackColor = true;
+            btnVentas.Click += btnVentas_Click;
+            // 
             // frmMenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -204,6 +215,7 @@
             Controls.Add(btnBombones);
             Controls.Add(btnClientes);
             Controls.Add(btnFabricas);
+            Controls.Add(btnVentas);
             Controls.Add(btnFormasDeVenta);
             Controls.Add(btnFormasDePago);
             Controls.Add(btnCiudades);
@@ -239,5 +251,6 @@
         private Button btnClientes;
         private Button btnFormasDePago;
         private Button btnFormasDeVenta;
+        private Button btnVentas;
     }
 }

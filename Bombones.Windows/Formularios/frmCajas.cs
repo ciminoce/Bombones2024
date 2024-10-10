@@ -192,6 +192,56 @@ namespace Bombones.Windows.Formularios
 
         private void tsbEditar_Click(object sender, EventArgs e)
         {
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            if (r.Tag == null) return;
+            CajaListDto cajaDto = (CajaListDto)r.Tag;
+            Producto? caja = _servicio!.GetProductoPorId(tipoProducto, cajaDto.ProductoId);
+            if (caja is null) return;
+            frmCajasAE frm = new frmCajasAE(_serviceProvider) { Text = "Editar Bombon" };
+            frm.SetCaja((Caja)caja!);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            caja = frm.GetCaja();
+
+            if (caja == null) return;
+            try
+            {
+
+                if (!_servicio!.Existe(caja))
+                {
+                    _servicio!.Guardar(caja);
+
+
+                    currentPage = _servicio!.GetPaginaPorRegistro(tipoProducto, caja.Nombre, pageSize);
+                    LoadData();
+                    int row = GridHelper.ObtenerRowIndex(dgvDatos, caja.ProductoId);
+                    GridHelper.MarcarRow(dgvDatos, row);
+                    MessageBox.Show("Registro editado",
+                        "Mensaje",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                }
+                else
+                {
+                    MessageBox.Show("Registro existente\nEdición denegada",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+            }
+
 
         }
 

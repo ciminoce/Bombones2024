@@ -38,6 +38,7 @@ namespace Bombones.IoC
             service.AddScoped<IRepositorioTiposDeTelefonos, RepositorioTiposDeTelefonos>();
 
             service.AddScoped<IRepositorioDetallesCajas,RepositorioDetallesCajas>();    
+            service.AddScoped<IRepositorioVentas,RepositorioVentas>();    
 
             service.AddScoped<IServiciosPaises>(sp => {
                 var repositorio = new RepositorioPaises();
@@ -103,6 +104,10 @@ namespace Bombones.IoC
                 var repositorio = new RepositorioProductos();
                 var repositorioDetallesCajas = new RepositorioDetallesCajas();
                 return new ServiciosProductos(repositorio, repositorioDetallesCajas, cadena);
+            });
+            service.AddScoped<IServiciosVentas>(sp => {
+                var repositorio = new RepositorioVentas();
+                return new ServiciosVentas(repositorio, cadena);
             });
 
             return service.BuildServiceProvider();

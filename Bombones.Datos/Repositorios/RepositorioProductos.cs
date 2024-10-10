@@ -147,6 +147,39 @@ namespace Bombones.Datos.Repositorios
                 }
 
             }
+            if (producto is Caja caja)
+            {
+                var updateQuery = @"UPDATE Cajas SET 
+                        NombreCaja = @Nombre, 
+                        Descripcion = @Descripcion, 
+                        PrecioCosto = @PrecioCosto, 
+                        PrecioVenta = @PrecioVenta, 
+                        Stock = @Stock, 
+                        NivelDeReposicion = @NivelDeReposicion, 
+                        Imagen = @Imagen, 
+                        Suspendido = @Suspendido 
+                        WHERE CajaId = @ProductoId";
+
+                int registrosAfectados = conn.Execute(updateQuery, new
+                {
+                    caja.Nombre,
+                    caja.Descripcion,
+                    caja.PrecioCosto,
+                    caja.PrecioVenta,
+                    caja.Stock,
+                    caja.NivelDeReposicion,
+                    caja.Imagen,
+                    caja.Suspendido,
+                    caja.ProductoId // CajaId corresponde a ProductoId en tu clase Bombon
+                }, tran);
+
+                if (registrosAfectados == 0)
+                {
+                    throw new Exception("No se pudo editar la caja");
+                }
+
+            }
+
         }
 
         public bool EstaRelacionado(TipoProducto tipoProducto, int productoId, SqlConnection conn)
@@ -226,7 +259,7 @@ namespace Bombones.Datos.Repositorios
                            c.NombreCaja AS Nombre, 
                            c.Descripcion, 
                            c.PrecioCosto, 
-                           c.PrecioVenta AS Precio, 
+                           c.PrecioVenta, 
                            c.Stock, 
                            c.NivelDeReposicion, 
                            c.Imagen, 

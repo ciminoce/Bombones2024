@@ -17,6 +17,11 @@ namespace Bombones.Windows.Formularios
         {
             base.OnLoad(e);
             CombosHelper.CargarComboBombones(ref cboBombones, serviceProvider);
+            if (detalleCaja is not null)
+            {
+                cboBombones.SelectedValue = detalleCaja.BombonId;
+                nudCantidad.Value = detalleCaja.Cantidad;
+            }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -34,7 +39,7 @@ namespace Bombones.Windows.Formularios
                 detalleCaja.BombonId = bombonSeleccionado!.ProductoId;
                 detalleCaja.Cantidad = (int)nudCantidad.Value;
                 detalleCaja.Bombon = bombonSeleccionado;
-
+                bombonSeleccionado = detalleCaja.Bombon;
                 DialogResult=DialogResult.OK;
             }
         }
@@ -59,6 +64,11 @@ namespace Bombones.Windows.Formularios
         public DetalleCaja? GetDetalle()
         {
             return detalleCaja;
+        }
+
+        public void SetDetalle(DetalleCaja detalleCaja)
+        {
+            this.detalleCaja = detalleCaja;
         }
     }
 }

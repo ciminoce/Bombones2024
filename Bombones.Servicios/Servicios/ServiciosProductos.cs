@@ -132,7 +132,18 @@ namespace Bombones.Servicios.Servicios
                         }
                         else
                         {
+
                             _repositorio!.Editar(producto, conn, tran);
+                            if (producto is Caja caja)
+                            {
+                                _repositorioDetallesCajas!.Borrar(caja.ProductoId, conn, tran);
+                                foreach (var item in caja.Detalles)
+                                {
+                                    item.CajaId = caja.ProductoId;
+                                    _repositorioDetallesCajas.Agregar(item, conn, tran);
+                                }
+
+                            }
                         }
 
                         tran.Commit();//guarda efectivamente

@@ -90,7 +90,13 @@ namespace Bombones.Windows
 
         private void btnCajas_Click(object sender, EventArgs e)
         {
-            frmCajas frm=new frmCajas(_serviceProvider);
+            frmCajas frm = new frmCajas(_serviceProvider);
+            frm.ShowDialog();
+        }
+
+        private void btnVentas_Click(object sender, EventArgs e)
+        {
+            frmVentas frm = new frmVentas(_serviceProvider);
             frm.ShowDialog();
         }
     }

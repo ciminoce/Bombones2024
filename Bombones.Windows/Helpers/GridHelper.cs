@@ -108,8 +108,8 @@ namespace Bombones.Windows.Helpers
                 case CajaListDto caja:
                     r.Cells[0].Value = caja.ProductoId;
                     r.Cells[1].Value = caja.Nombre;
-                    r.Cells[2].Value = caja.Variedades;
-                    r.Cells[3].Value = caja.CantidadBombones;
+                    r.Cells[2].Value = caja.CantidadBombones;
+                    r.Cells[3].Value = caja.Variedades;
                     r.Cells[4].Value = caja.Stock;
                     r.Cells[5].Value = caja.Precio;
                     r.Cells[6].Value = caja.Suspendido;
@@ -119,7 +119,13 @@ namespace Bombones.Windows.Helpers
                     r.Cells[1].Value = detalle.Bombon!.Nombre;
                     r.Cells[2].Value = detalle.Cantidad;
                     break;
-
+                case VentaListDto venta:
+                    r.Cells[0].Value = venta.VentaId;
+                    r.Cells[1].Value = venta.Cliente;
+                    r.Cells[2].Value = venta.FechaVenta.ToShortDateString();
+                    r.Cells[3].Value = venta.Regalo;
+                    r.Cells[4].Value = venta.Total;
+                    break;
                 default:
                     break;
             }
@@ -162,9 +168,6 @@ namespace Bombones.Windows.Helpers
 
         }
 
-        internal static void QuitarFila(DataGridViewRow r)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

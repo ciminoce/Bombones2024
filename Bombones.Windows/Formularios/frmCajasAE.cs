@@ -31,11 +31,21 @@ namespace Bombones.Windows.Formularios
             {
                 caja = new Caja();
             }
+            MostrarDatosCaja();
+            GridHelper.MostrarDatosEnGrilla<DetalleCaja>(caja.Detalles, dgvDatos);
         }
 
-        private void CargarDetallesEnCarrito()
+        private void MostrarDatosCaja()
         {
+            txtCaja.Text = caja.Nombre;
+            txtDescripcion.Text = caja.Descripcion;
+            txtPrecioCosto.Text = caja.PrecioCosto.ToString();
+            txtPrecioVta.Text = caja.PrecioVenta.ToString();
+            nudNivel.Value = caja.NivelDeReposicion;
+            nudStock.Value = caja.Stock;
+            
         }
+
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -119,15 +129,47 @@ namespace Bombones.Windows.Formularios
 
         private void btnBorrarBombon_Click(object sender, EventArgs e)
         {
+            if (dgvDatos.SelectedRows.Count==0)
+            {
+                return;
+            }
+            var r=dgvDatos.SelectedRows[0];
+            DetalleCaja detalle = (DetalleCaja)r.Tag!;
+            DialogResult dr = MessageBox.Show($"¿Desea dar de baja el bombón {detalle.Bombon!.Nombre}?",
+                "Confirmar",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+            if (dr == DialogResult.Cancel) return;
+            caja!.Eliminar(detalle);
+            GridHelper.QuitarFila(r,dgvDatos);
+            MessageBox.Show("Item eliminado!!!", "Mensaje",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEditarBombon_Click(object sender, EventArgs e)
         {
+            if (dgvDatos.SelectedRows.Count == 0) return;
+            var r = dgvDatos.SelectedRows[0];
+            DetalleCaja? detalle = (DetalleCaja)r.Tag!;
+            frmManejarBombonCajaAE frm = new frmManejarBombonCajaAE(_serviceProvider) { Text = "Editar un Detalle Caja" };
+            frm.SetDetalle(detalle);
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            detalle = frm.GetDetalle();
+            GridHelper.SetearFila(r,detalle!);
+            MessageBox.Show("Item editado!!!", "Mensaje",
+                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         public Caja? GetCaja()
         {
             return caja;
+        }
+
+        public void SetCaja(Caja caja)
+        {
+            this.caja = caja;
         }
     }
 }
