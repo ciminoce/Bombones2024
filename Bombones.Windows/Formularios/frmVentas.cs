@@ -143,12 +143,20 @@ namespace Bombones.Windows.Formularios
 
         private void tsbDetalles_Click(object sender, EventArgs e)
         {
-            if(dgvDatos.SelectedRows.Count==0) return;
+            if (dgvDatos.SelectedRows.Count == 0) return;
             var r = dgvDatos.SelectedRows[0];
             VentaListDto ventaDto = (VentaListDto)r.Tag!;
             Venta? venta = _servicio!.GetVentaPorId(ventaDto.VentaId);
             frmDetalleVenta frm = new frmDetalleVenta();
             frm.SetVenta(venta);
+            frm.ShowDialog(this);
+        }
+
+        private void tsbNuevo_Click(object sender, EventArgs e)
+        {
+            frmVentasAE frm = new frmVentasAE(_serviceProvider) { Text = "Nueva Venta" };
+            DialogResult dr = frm.ShowDialog(this);
+
         }
     }
 }

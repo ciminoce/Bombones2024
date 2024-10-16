@@ -16,6 +16,6 @@ namespace Bombones.Datos.Interfaces
         int GetPaginaPorRegistro(SqlConnection conn, TipoProducto tipoProducto, string nombre, int pageSize);
         void Agregar(Producto producto, SqlConnection conn, SqlTransaction tran);
         void Editar(Producto producto, SqlConnection conn, SqlTransaction tran);
-        List<Producto> GetListaProductos(SqlConnection conn);
+        List<Producto> GetListaProductos(SqlConnection conn, TipoProducto tipoProducto);
     }
 }

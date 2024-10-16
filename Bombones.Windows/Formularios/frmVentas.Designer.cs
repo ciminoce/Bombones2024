@@ -84,6 +84,7 @@
             tsbNuevo.Size = new Size(46, 59);
             tsbNuevo.Text = "Nuevo";
             tsbNuevo.TextImageRelation = TextImageRelation.ImageAboveText;
+            tsbNuevo.Click += tsbNuevo_Click;
             // 
             // tsbAnular
             // 

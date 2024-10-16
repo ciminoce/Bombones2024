@@ -433,16 +433,35 @@ namespace Bombones.Datos.Repositorios
 
         }
 
-        public List<Producto> GetListaProductos(SqlConnection conn)
+        public List<Producto> GetListaProductos(SqlConnection conn, TipoProducto tipoProducto)
         {
             var listaProductos = new List<Producto>();
+            if (tipoProducto is TipoProducto.Bombon)
+            {
 
-            var selectQuery = @"SELECT b.BombonId AS ProductoId, 
-                                   b.NombreBombon AS Nombre 
+                var selectQuery = @"SELECT b.BombonId AS ProductoId, 
+                                   b.NombreBombon AS Nombre,
+                                b.PrecioVenta,
+                                b.Stock
                             FROM Bombones b WHERE b.Suspendido=0
                             ORDER BY b.NombreBombon";
                 var listaBombones = conn.Query<Bombon>(selectQuery).ToList();
                 listaProductos.AddRange(listaBombones);
+
+            }
+            if (tipoProducto is TipoProducto.Caja)
+            {
+
+                var selectQuery = @"SELECT c.CajaId AS ProductoId, 
+                                   c.NombreCaja AS Nombre,
+                                c.PrecioVenta,
+                                c.Stock
+                            FROM Cajas c WHERE c.Suspendido=0
+                            ORDER BY c.NombreCaja";
+                var listaCajas = conn.Query<Caja>(selectQuery).ToList();
+                listaProductos.AddRange(listaCajas);
+
+            }
 
             return listaProductos;
         }

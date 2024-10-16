@@ -44,6 +44,7 @@
             label1 = new Label();
             panelGrilla = new Panel();
             dgvDatos = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
             colProducto = new DataGridViewTextBoxColumn();
             colCantidad = new DataGridViewTextBoxColumn();
             colPrecio = new DataGridViewTextBoxColumn();
@@ -91,6 +92,7 @@
             btnCerrar.TabIndex = 4;
             btnCerrar.Text = "Cerrar";
             btnCerrar.UseVisualStyleBackColor = true;
+            btnCerrar.Click += btnCerrar_Click;
             // 
             // panelSuperior
             // 
@@ -207,7 +209,7 @@
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colProducto, colCantidad, colPrecio, colTotal });
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colId, colProducto, colCantidad, colPrecio, colTotal });
             dgvDatos.Dock = DockStyle.Fill;
             dgvDatos.Location = new Point(0, 0);
             dgvDatos.Name = "dgvDatos";
@@ -215,6 +217,13 @@
             dgvDatos.RowHeadersVisible = false;
             dgvDatos.Size = new Size(800, 310);
             dgvDatos.TabIndex = 2;
+            // 
+            // colId
+            // 
+            colId.HeaderText = "Id";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Visible = false;
             // 
             // colProducto
             // 
@@ -257,6 +266,7 @@
             Controls.Add(panelInferior);
             Name = "frmDetalleVenta";
             Text = "frmDetalleVenta";
+            Load += frmDetalleVenta_Load;
             panelInferior.ResumeLayout(false);
             panelInferior.PerformLayout();
             panelSuperior.ResumeLayout(false);
@@ -284,6 +294,7 @@
         private Label label1;
         private Panel panelGrilla;
         private DataGridView dgvDatos;
+        private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colProducto;
         private DataGridViewTextBoxColumn colCantidad;
         private DataGridViewTextBoxColumn colPrecio;

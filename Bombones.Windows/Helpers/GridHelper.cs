@@ -126,6 +126,14 @@ namespace Bombones.Windows.Helpers
                     r.Cells[3].Value = venta.Regalo;
                     r.Cells[4].Value = venta.Total;
                     break;
+                case DetalleVenta detalleVta:
+                    r.Cells[0].Value = detalleVta.VentaId;
+                    r.Cells[1].Value = detalleVta.BombonId is null?detalleVta.Caja!.Nombre:detalleVta.Bombon!.Nombre;
+                    r.Cells[2].Value = detalleVta.Precio;
+                    r.Cells[3].Value = detalleVta.Cantidad;
+                    r.Cells[4].Value = detalleVta.Cantidad * detalleVta.Precio;
+                    break;
+
                 default:
                     break;
             }

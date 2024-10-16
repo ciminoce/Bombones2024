@@ -1,5 +1,6 @@
 ﻿using Bombones.Entidades.Dtos;
 using Bombones.Entidades.Entidades;
+using Bombones.Entidades.Enumeraciones;
 using Bombones.Servicios.Intefaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -184,7 +185,7 @@ namespace Bombones.Windows.Helpers
         {
             _serviceProvider = serviceProvider;
             IServiciosProductos? servicio = _serviceProvider?.GetService<IServiciosProductos>();
-            var lista = servicio?.GetListaProductos();
+            var lista = servicio?.GetListaProductos(TipoProducto.Bombon);
             var defaultTipo = new Producto()
             {
                 ProductoId = 0,

@@ -14,6 +14,6 @@ namespace Bombones.Servicios.Intefaces
         List<ProductoListDto> GetLista(int currentPage, int pageSize,TipoProducto tipoProducto, Func<ProductoListDto, bool>? filter = null );
         int GetPaginaPorRegistro(TipoProducto tipoProducto, string nombre, int pageSize);
         void Guardar(Producto producto);
-        List<Producto> GetListaProductos();
+        List<Producto> GetListaProductos(TipoProducto tipoProducto);
     }
 }

@@ -157,12 +157,12 @@ namespace Bombones.Servicios.Servicios
             }
         }
 
-        public List<Producto> GetListaProductos()
+        public List<Producto> GetListaProductos(TipoProducto tipoProducto)
         {
             using (var conn = new SqlConnection(_cadena))
             {
                 conn.Open();
-                return _repositorio!.GetListaProductos(conn);
+                return _repositorio!.GetListaProductos(conn,tipoProducto);
             }
         }
     }

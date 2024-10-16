@@ -37,10 +37,6 @@
             btnCajas = new Button();
             btnBombones = new Button();
             dgvDatos = new DataGridView();
-            colProducto = new DataGridViewTextBoxColumn();
-            colPrecio = new DataGridViewTextBoxColumn();
-            colCantidad = new DataGridViewTextBoxColumn();
-            colTotal = new DataGridViewTextBoxColumn();
             panelTotales = new Panel();
             lblTotal = new Label();
             label4 = new Label();
@@ -51,6 +47,11 @@
             btnOk = new Button();
             panelCarrito = new Panel();
             errorProvider1 = new ErrorProvider(components);
+            colId = new DataGridViewTextBoxColumn();
+            colProducto = new DataGridViewTextBoxColumn();
+            colPrecio = new DataGridViewTextBoxColumn();
+            colCantidad = new DataGridViewTextBoxColumn();
+            colTotal = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -121,6 +122,7 @@
             btnCajas.TabIndex = 0;
             btnCajas.Text = "Cajas";
             btnCajas.UseVisualStyleBackColor = true;
+            btnCajas.Click += btnCajas_Click;
             // 
             // btnBombones
             // 
@@ -130,50 +132,20 @@
             btnBombones.TabIndex = 0;
             btnBombones.Text = "Bombones";
             btnBombones.UseVisualStyleBackColor = true;
+            btnBombones.Click += btnBombones_Click;
             // 
             // dgvDatos
             // 
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colProducto, colPrecio, colCantidad, colTotal });
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colId, colProducto, colPrecio, colCantidad, colTotal });
             dgvDatos.Dock = DockStyle.Fill;
             dgvDatos.Location = new Point(0, 112);
             dgvDatos.Name = "dgvDatos";
             dgvDatos.ReadOnly = true;
             dgvDatos.Size = new Size(421, 497);
             dgvDatos.TabIndex = 2;
-            // 
-            // colProducto
-            // 
-            colProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colProducto.HeaderText = "Producto";
-            colProducto.Name = "colProducto";
-            colProducto.ReadOnly = true;
-            // 
-            // colPrecio
-            // 
-            colPrecio.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colPrecio.HeaderText = "P. Unit.";
-            colPrecio.Name = "colPrecio";
-            colPrecio.ReadOnly = true;
-            colPrecio.Width = 70;
-            // 
-            // colCantidad
-            // 
-            colCantidad.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colCantidad.HeaderText = "Cant.";
-            colCantidad.Name = "colCantidad";
-            colCantidad.ReadOnly = true;
-            colCantidad.Width = 60;
-            // 
-            // colTotal
-            // 
-            colTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colTotal.HeaderText = "Total";
-            colTotal.Name = "colTotal";
-            colTotal.ReadOnly = true;
-            colTotal.Width = 57;
             // 
             // panelTotales
             // 
@@ -284,13 +256,51 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
+            // colId
+            // 
+            colId.HeaderText = "Id";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Visible = false;
+            // 
+            // colProducto
+            // 
+            colProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colProducto.HeaderText = "Producto";
+            colProducto.Name = "colProducto";
+            colProducto.ReadOnly = true;
+            // 
+            // colPrecio
+            // 
+            colPrecio.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colPrecio.HeaderText = "P. Unit.";
+            colPrecio.Name = "colPrecio";
+            colPrecio.ReadOnly = true;
+            colPrecio.Width = 70;
+            // 
+            // colCantidad
+            // 
+            colCantidad.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colCantidad.HeaderText = "Cant.";
+            colCantidad.Name = "colCantidad";
+            colCantidad.ReadOnly = true;
+            colCantidad.Width = 60;
+            // 
+            // colTotal
+            // 
+            colTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colTotal.HeaderText = "Total";
+            colTotal.Name = "colTotal";
+            colTotal.ReadOnly = true;
+            colTotal.Width = 57;
+            // 
             // frmVentasAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1163, 730);
             Controls.Add(splitContainer1);
-            MinimumSize = new Size(1179, 769);
+            MinimumSize = new Size(1179, 726);
             Name = "frmVentasAE";
             Text = "frmVentasAE";
             Load += frmVentasAE_Load;
@@ -317,10 +327,6 @@
         private Button btnCancelar;
         private Button btnOk;
         private FlowLayoutPanel flpProductos;
-        private DataGridViewTextBoxColumn colProducto;
-        private DataGridViewTextBoxColumn colPrecio;
-        private DataGridViewTextBoxColumn colCantidad;
-        private DataGridViewTextBoxColumn colTotal;
         private Label lblTotal;
         private Label label4;
         private Label lblCantidad;
@@ -330,5 +336,10 @@
         private ErrorProvider errorProvider1;
         private Button btnCajas;
         private Button btnBombones;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn colProducto;
+        private DataGridViewTextBoxColumn colPrecio;
+        private DataGridViewTextBoxColumn colCantidad;
+        private DataGridViewTextBoxColumn colTotal;
     }
 }
