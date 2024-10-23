@@ -197,5 +197,23 @@ namespace Bombones.Windows.Helpers
             cbo.ValueMember = "ProductoId";
             cbo.SelectedIndex = 0;
         }
+
+        public static void CargarComboClientes(ref ComboBox cbo, IServiceProvider? serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+            IServiciosClientes? servicio = _serviceProvider?.GetService<IServiciosClientes>();
+            var lista = servicio?.GetClientes();
+            var defaultCliente = new Cliente()
+            {
+                ClienteId = 99999,
+                Apellido="Consumidor",
+                Nombres = "Final"
+            };
+            lista?.Insert(0, defaultCliente);
+            cbo.DataSource = lista;
+            cbo.DisplayMember = "NombreCompleto";
+            cbo.ValueMember = "ClienteId";
+            cbo.SelectedIndex = 0;
+        }
     }
 }

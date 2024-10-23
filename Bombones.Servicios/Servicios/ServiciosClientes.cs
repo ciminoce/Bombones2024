@@ -168,5 +168,15 @@ namespace Bombones.Servicios.Servicios
             }
 
         }
+
+        public List<Cliente> GetClientes()
+        {
+            using (var conn = new SqlConnection(_cadena))
+            {
+                conn.Open();
+                return _repositorioClientes.GetClientes(conn);
+            }
+
+        }
     }
 }

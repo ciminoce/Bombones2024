@@ -203,5 +203,17 @@ namespace Bombones.Datos.Repositorios
             return conn.ExecuteScalar<int>(selectQuery);
 
         }
+
+        public List<Cliente> GetClientes(SqlConnection conn)
+        {
+            var selectQuery = @"SELECT 
+                c.ClienteId, 
+                c.Documento, 
+                c.Apellido,
+                c.Nombres
+            FROM Clientes c
+            ORDER BY c.Apellido, c.Nombres";
+            return conn.Query<Cliente>(selectQuery).ToList();
+        }
     }
 }

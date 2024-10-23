@@ -18,6 +18,6 @@ namespace Bombones.Datos.Interfaces
             int? pageSize, SqlTransaction? tran = null);
         int GetCantidad(SqlConnection conn);
         ClienteDetalleDto? GetDetalleCliente(int clienteId, SqlConnection conn, SqlTransaction? tran = null);
-
+        List<Cliente> GetClientes(SqlConnection conn);
     }
 }

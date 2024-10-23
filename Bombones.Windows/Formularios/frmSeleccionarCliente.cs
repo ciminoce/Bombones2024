@@ -5,10 +5,12 @@ namespace Bombones.Windows.Formularios
 {
     public partial class frmSeleccionarCliente : Form
     {
+        private readonly IServiceProvider? _serviceProvider;
         private Cliente? cliente;
-        public frmSeleccionarCliente()
+        public frmSeleccionarCliente(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -19,7 +21,7 @@ namespace Bombones.Windows.Formularios
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            //CombosHelper.CargarComboClientes(ref cboClientes);
+            CombosHelper.CargarComboClientes(ref cboClientes,_serviceProvider);
         }
 
         public Cliente? GetCliente()

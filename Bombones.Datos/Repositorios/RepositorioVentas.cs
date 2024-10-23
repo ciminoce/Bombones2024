@@ -8,6 +8,27 @@ namespace Bombones.Datos.Repositorios
 {
     public class RepositorioVentas : IRepositorioVentas
     {
+        public void Agregar(Venta venta, SqlConnection conn, SqlTransaction tran)
+        {
+            string insertQuery = @"INSERT INTO Ventas 
+                (ClienteId, FechaVenta, Regalo, Total, Estado ) 
+                VALUES (@ClienteId, @FechaVenta, @Regalo, @Total, @Estado); 
+                SELECT CAST(SCOPE_IDENTITY() as int)";
+
+            int primaryKey = conn.QuerySingle<int>(insertQuery, venta, tran);
+            if (primaryKey > 0)
+            {
+                venta.VentaId = primaryKey;
+                return;
+            }
+            throw new Exception("No se pudo agregar la Venta");
+        }
+
+        public void Editar(Venta venta, SqlConnection conn, SqlTransaction tran)
+        {
+            throw new NotImplementedException();
+        }
+
         public int GetCantidad(SqlConnection conn, Func<VentaListDto, bool>? filter)
         {
             var selectQuery = @"SELECT
@@ -37,6 +58,7 @@ namespace Bombones.Datos.Repositorios
 				v.FechaVenta,
 				v.Regalo,
 				v.Total,
+				v.Estado,
 				COALESCE(c.Nombres+' '+c.Apellido,'Consumidor Final') as Cliente
 	
 				FROM Ventas v LEFT JOIN Clientes c ON v.ClienteId=c.ClienteId
@@ -57,6 +79,7 @@ namespace Bombones.Datos.Repositorios
 				v.FechaVenta,
 				v.Regalo,
 				v.Total,
+				v.Estado,
 				COALESCE(v.ClienteId,999999) AS ClienteId,
 				COALESCE(c.Nombres,'Consumidor') as Nombres,
 				COALESCE(c.Apellido,'Final') as Apellido,

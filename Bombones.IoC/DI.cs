@@ -42,6 +42,8 @@ namespace Bombones.IoC
 
             service.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
 
+            service.AddScoped<IRepositorioDetallesVentas, RepositorioDetallesVentas>();
+
             service.AddScoped<IServiciosPaises>(sp =>
             {
                 var repositorio = new RepositorioPaises();
@@ -117,7 +119,8 @@ namespace Bombones.IoC
             service.AddScoped<IServiciosVentas>(sp =>
             {
                 var repositorio = new RepositorioVentas();
-                return new ServiciosVentas(repositorio, cadena);
+                var repositorioDetalles = new RepositorioDetallesVentas();
+                return new ServiciosVentas(repositorio, repositorioDetalles, cadena);
             });
 
             service.AddScoped<IServiciosUsuarios>(sp =>
@@ -125,6 +128,7 @@ namespace Bombones.IoC
                 var repositorio = new RepositorioUsuarios();
                 return new ServiciosUsuarios(repositorio, cadena);
             });
+
             return service.BuildServiceProvider();
         }
     }

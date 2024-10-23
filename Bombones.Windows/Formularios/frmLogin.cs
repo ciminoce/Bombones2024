@@ -16,13 +16,6 @@ namespace Bombones.Windows
             _servicios = serviceProvider!.GetService<IServiciosUsuarios>();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            frmNuevoMenuPrincipal frm = new frmNuevoMenuPrincipal(serviceProvider);
-            frm.WindowState = FormWindowState.Maximized;
-            frm.Show();
-        }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
@@ -31,11 +24,13 @@ namespace Bombones.Windows
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            user = _servicios.GetUsuario(txtUsuario.Text, txtClave.Text);
+            //user = _servicios.GetUsuario(txtUsuario.Text, txtClave.Text);
+            user = _servicios.GetUsuario("admin", "admin");
             if (user != null)
             {
-                this.Hide();
+                Hide();
                 var frm = new frmNuevoMenuPrincipal(serviceProvider);
+                
                 frm.FormClosing += Frm_FormClosing;
                 frm.SetUsuario(user);
                 frm.Show();

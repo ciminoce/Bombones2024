@@ -148,7 +148,7 @@
             // 
             bombonesToolStripMenuItem.Image = Properties.Resources.candy_28px;
             bombonesToolStripMenuItem.Name = "bombonesToolStripMenuItem";
-            bombonesToolStripMenuItem.Size = new Size(180, 22);
+            bombonesToolStripMenuItem.Size = new Size(131, 22);
             bombonesToolStripMenuItem.Text = "Bombones";
             bombonesToolStripMenuItem.Click += bombonesToolStripMenuItem_Click;
             // 
@@ -156,7 +156,7 @@
             // 
             cajasToolStripMenuItem.Image = Properties.Resources.christmas_gift_28px;
             cajasToolStripMenuItem.Name = "cajasToolStripMenuItem";
-            cajasToolStripMenuItem.Size = new Size(180, 22);
+            cajasToolStripMenuItem.Size = new Size(131, 22);
             cajasToolStripMenuItem.Text = "Cajas";
             cajasToolStripMenuItem.Click += cajasToolStripMenuItem_Click;
             // 

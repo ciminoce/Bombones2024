@@ -28,6 +28,7 @@ namespace Bombones.Windows.Formularios
             txtFecha.Text = $"{venta.FechaVenta.ToShortDateString()}";
             txtVentaNro.Text = $"{venta.VentaId}";
             txtTotal.Text = $"{venta.Total}";
+            txtEstado.Text = $"{venta.Estado.ToString()}";
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

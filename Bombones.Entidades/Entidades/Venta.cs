@@ -1,4 +1,6 @@
-﻿namespace Bombones.Entidades.Entidades
+﻿using Bombones.Entidades.Enumeraciones;
+
+namespace Bombones.Entidades.Entidades
 {
     public class Venta
     {
@@ -7,6 +9,7 @@
         public DateTime FechaVenta { get; set; }
         public bool Regalo { get; set; }
         public decimal Total { get; set; }
+        public EstadoVenta Estado { get; set; }
         public List<DetalleVenta> Detalles { get; set; } = new List<DetalleVenta>();
         public Cliente? Cliente { get; set; }
 

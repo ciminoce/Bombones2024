@@ -13,6 +13,6 @@ namespace Bombones.Servicios.Intefaces
         Cliente? GetClientePorId(int clienteId);
         int GetCantidad();
         ClienteDetalleDto? GetDetalleCliente(int clienteId);
-
+        List<Cliente>GetClientes();
     }
 }

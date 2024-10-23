@@ -114,6 +114,34 @@ namespace Bombones.Windows.Formularios
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (ValidarDatos())
+            {
+                frmSeleccionarCliente frm = new frmSeleccionarCliente(_serviceProvider) { Text = "Seleccionar Cliente" };
+                DialogResult dr = frm.ShowDialog(this);
+                if (dr == DialogResult.Cancel)
+                {
+                    CancelarCompra();
+                    return;
+                }
+                Cliente? cliente = frm.GetCliente();
+                venta.Cliente = cliente;
+                venta.FechaVenta = DateTime.Now;
+                venta.Regalo = false;
+                venta.Total = venta.GetTotal();
+                DialogResult = DialogResult.OK;
+            }
+        }
+
+        private bool ValidarDatos()
+        {
+            bool valido = true;
+            errorProvider1.Clear();
+            if (venta.GetCantidad()==0)
+            {
+                valido = false;
+                errorProvider1.SetError(dgvDatos, "Ingresar al menos un ítem");
+            }
+            return valido;
         }
 
         private void CancelarCompra()
@@ -131,6 +159,11 @@ namespace Bombones.Windows.Formularios
         {
             tipoProducto = TipoProducto.Bombon;
             RecargarGrilla();
+        }
+
+        public Venta? GetVenta()
+        {
+            return venta;
         }
     }
 }

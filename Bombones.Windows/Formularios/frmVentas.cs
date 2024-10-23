@@ -156,6 +156,33 @@ namespace Bombones.Windows.Formularios
         {
             frmVentasAE frm = new frmVentasAE(_serviceProvider) { Text = "Nueva Venta" };
             DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            try
+            {
+                Venta? venta = frm.GetVenta();
+                if (venta is null) return;
+                _servicio.Guardar(venta);
+                totalRecords = _servicio!.GetCantidad(null);
+                totalPages = (int)Math.Ceiling((decimal)totalRecords / pageSize);
+                currentPage = totalPages;
+                LoadData();
+                int row = GridHelper.ObtenerRowIndex(dgvDatos, venta.VentaId);
+                GridHelper.MarcarRow(dgvDatos, row);
+
+                MessageBox.Show("Registro agregado",
+                    "Mensaje",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message,
+                    "Mensaje",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
 
         }
     }

@@ -8,5 +8,6 @@ namespace Bombones.Servicios.Intefaces
         int GetCantidad(Func<VentaListDto, bool>? filter);
         List<VentaListDto> GetLista(int currentPage, int pageSize, Func<VentaListDto, bool>? filter = null);
         Venta? GetVentaPorId(int ventaId);
+        void Guardar(Venta? venta);
     }
 }
