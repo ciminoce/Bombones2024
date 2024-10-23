@@ -28,14 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
             label1 = new Label();
-            cboUsuarios = new ComboBox();
-            button1 = new Button();
-            button2 = new Button();
+            btnLogin = new Button();
+            btnSalir = new Button();
             label2 = new Label();
             txtClave = new TextBox();
+            txtUsuario = new TextBox();
+            errorProvider1 = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -57,38 +60,31 @@
             label1.TabIndex = 1;
             label1.Text = "Usuario:";
             // 
-            // cboUsuarios
+            // btnLogin
             // 
-            cboUsuarios.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboUsuarios.FormattingEnabled = true;
-            cboUsuarios.Location = new Point(292, 17);
-            cboUsuarios.Name = "cboUsuarios";
-            cboUsuarios.Size = new Size(287, 23);
-            cboUsuarios.TabIndex = 2;
+            btnLogin.BackColor = Color.FromArgb(0, 192, 0);
+            btnLogin.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnLogin.ForeColor = Color.White;
+            btnLogin.Location = new Point(243, 90);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(166, 107);
+            btnLogin.TabIndex = 3;
+            btnLogin.Text = "Login";
+            btnLogin.UseVisualStyleBackColor = false;
+            btnLogin.Click += btnLogin_Click;
             // 
-            // button1
+            // btnSalir
             // 
-            button1.BackColor = Color.FromArgb(0, 192, 0);
-            button1.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(243, 90);
-            button1.Name = "button1";
-            button1.Size = new Size(166, 107);
-            button1.TabIndex = 3;
-            button1.Text = "Login";
-            button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            button2.BackColor = Color.Red;
-            button2.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(415, 90);
-            button2.Name = "button2";
-            button2.Size = new Size(166, 107);
-            button2.TabIndex = 3;
-            button2.Text = "Cancelar";
-            button2.UseVisualStyleBackColor = false;
+            btnSalir.BackColor = Color.Red;
+            btnSalir.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnSalir.ForeColor = Color.White;
+            btnSalir.Location = new Point(415, 90);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(166, 107);
+            btnSalir.TabIndex = 3;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += btnSalir_Click;
             // 
             // label2
             // 
@@ -106,16 +102,27 @@
             txtClave.Size = new Size(286, 23);
             txtClave.TabIndex = 4;
             // 
+            // txtUsuario
+            // 
+            txtUsuario.Location = new Point(292, 16);
+            txtUsuario.Name = "txtUsuario";
+            txtUsuario.Size = new Size(286, 23);
+            txtUsuario.TabIndex = 4;
+            // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(632, 230);
             ControlBox = false;
+            Controls.Add(txtUsuario);
             Controls.Add(txtClave);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(cboUsuarios);
+            Controls.Add(btnSalir);
+            Controls.Add(btnLogin);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
@@ -125,6 +132,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmLogin";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -133,10 +141,11 @@
 
         private PictureBox pictureBox1;
         private Label label1;
-        private ComboBox cboUsuarios;
-        private Button button1;
-        private Button button2;
+        private Button btnLogin;
+        private Button btnSalir;
         private Label label2;
         private TextBox txtClave;
+        private TextBox txtUsuario;
+        private ErrorProvider errorProvider1;
     }
 }

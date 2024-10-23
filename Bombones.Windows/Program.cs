@@ -13,7 +13,7 @@ namespace Bombones.Windows
         {
             _serviceProvider=DI.ConfigurarServicios();
             ApplicationConfiguration.Initialize();
-            Application.Run(new frmMenuPrincipal(_serviceProvider));
+            Application.Run(new frmLogin(_serviceProvider));
         }
     }
 }

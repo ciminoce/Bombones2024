@@ -37,14 +37,18 @@ namespace Bombones.IoC
             service.AddScoped<IRepositorioTiposDeDirecciones, RepositorioTiposDeDirecciones>();
             service.AddScoped<IRepositorioTiposDeTelefonos, RepositorioTiposDeTelefonos>();
 
-            service.AddScoped<IRepositorioDetallesCajas,RepositorioDetallesCajas>();    
-            service.AddScoped<IRepositorioVentas,RepositorioVentas>();    
+            service.AddScoped<IRepositorioDetallesCajas, RepositorioDetallesCajas>();
+            service.AddScoped<IRepositorioVentas, RepositorioVentas>();
 
-            service.AddScoped<IServiciosPaises>(sp => {
+            service.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
+
+            service.AddScoped<IServiciosPaises>(sp =>
+            {
                 var repositorio = new RepositorioPaises();
                 return new ServiciosPaises(repositorio, cadena);
             });
-            service.AddScoped<IServiciosTiposDeChocolates>(sp => {
+            service.AddScoped<IServiciosTiposDeChocolates>(sp =>
+            {
                 var repositorio = new RepositorioTiposDeChocolates();
                 return new ServiciosTiposDeChocolates(repositorio, cadena);
             });
@@ -65,12 +69,14 @@ namespace Bombones.IoC
                 return new ServiciosProvinciasEstados(repositorio, cadena);
             });
 
-            service.AddScoped<IServiciosCiudades>(sp => {
+            service.AddScoped<IServiciosCiudades>(sp =>
+            {
                 var repositorio = new RepositorioCiudades();
                 return new ServiciosCiudades(repositorio, cadena);
             });
 
-            service.AddScoped<IServiciosFabricas>(sp => {
+            service.AddScoped<IServiciosFabricas>(sp =>
+            {
                 var repositorio = new RepositorioFabricas();
                 return new ServiciosFabricas(repositorio, cadena);
             });
@@ -90,26 +96,35 @@ namespace Bombones.IoC
                     cadena);
             });
 
-            service.AddScoped<IServiciosTiposDeDirecciones>(sp => {
+            service.AddScoped<IServiciosTiposDeDirecciones>(sp =>
+            {
                 var repositorio = new RepositorioTiposDeDirecciones();
                 return new ServiciosTiposDeDirecciones(repositorio, cadena);
             });
 
-            service.AddScoped<IServiciosTiposDeTelefonos>(sp => {
+            service.AddScoped<IServiciosTiposDeTelefonos>(sp =>
+            {
                 var repositorio = new RepositorioTiposDeTelefonos();
                 return new ServiciosTiposDeTelefonos(repositorio, cadena);
             });
 
-            service.AddScoped<IServiciosProductos>(sp => {
+            service.AddScoped<IServiciosProductos>(sp =>
+            {
                 var repositorio = new RepositorioProductos();
                 var repositorioDetallesCajas = new RepositorioDetallesCajas();
                 return new ServiciosProductos(repositorio, repositorioDetallesCajas, cadena);
             });
-            service.AddScoped<IServiciosVentas>(sp => {
+            service.AddScoped<IServiciosVentas>(sp =>
+            {
                 var repositorio = new RepositorioVentas();
                 return new ServiciosVentas(repositorio, cadena);
             });
 
+            service.AddScoped<IServiciosUsuarios>(sp =>
+            {
+                var repositorio = new RepositorioUsuarios();
+                return new ServiciosUsuarios(repositorio, cadena);
+            });
             return service.BuildServiceProvider();
         }
     }

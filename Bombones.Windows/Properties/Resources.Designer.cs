@@ -123,6 +123,16 @@ namespace Bombones.Windows.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap barcode_48px {
+            get {
+                object obj = ResourceManager.GetObject("barcode_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Buscar {
             get {
                 object obj = ResourceManager.GetObject("Buscar", resourceCulture);
@@ -143,9 +153,39 @@ namespace Bombones.Windows.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap candy_28px {
+            get {
+                object obj = ResourceManager.GetObject("candy_28px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap choco_balls {
             get {
                 object obj = ResourceManager.GetObject("choco-balls", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap christmas_gift_28px {
+            get {
+                object obj = ResourceManager.GetObject("christmas_gift_28px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Clientes {
+            get {
+                object obj = ResourceManager.GetObject("Clientes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -236,6 +276,26 @@ namespace Bombones.Windows.Properties {
         internal static System.Drawing.Bitmap edit_property_24px {
             get {
                 object obj = ResourceManager.GetObject("edit_property_24px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Empleados {
+            get {
+                object obj = ResourceManager.GetObject("Empleados", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Files {
+            get {
+                object obj = ResourceManager.GetObject("Files", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -403,6 +463,16 @@ namespace Bombones.Windows.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap shutdown_48px1 {
+            get {
+                object obj = ResourceManager.GetObject("shutdown_48px1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap trash_28px {
             get {
                 object obj = ResourceManager.GetObject("trash_28px", resourceCulture);
@@ -416,6 +486,26 @@ namespace Bombones.Windows.Properties {
         internal static System.Drawing.Bitmap Update {
             get {
                 object obj = ResourceManager.GetObject("Update", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Usuarios {
+            get {
+                object obj = ResourceManager.GetObject("Usuarios", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ventas {
+            get {
+                object obj = ResourceManager.GetObject("Ventas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

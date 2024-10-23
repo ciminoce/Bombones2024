@@ -145,6 +145,9 @@
   <data name="Cancelar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Cancelar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Ventas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Ventas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="minus_24px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\minus_24px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -190,11 +193,17 @@
   <data name="previous_24px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\previous_24px1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="barcode_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\barcode_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="alphabetical_sorting_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\alphabetical_sorting_16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delete_sign_28px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete_sign_28px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="christmas_gift_28px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\christmas_gift_28px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="filter_intense_40px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\filter_intense_40px1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -202,14 +211,23 @@
   <data name="arrow_pointing_left_20px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow_pointing_left_20px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="edit_28px1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\edit_28px1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="candy_28px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\candy_28px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Files" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Files.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="choco-balls" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\choco-balls.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Delete1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit_28px1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\edit_28px1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="list_40px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\list_40px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -223,10 +241,19 @@
   <data name="filter_40px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\filter_40px1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Usuarios" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Usuarios.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="numerical_sorting_12_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\numerical_sorting_12_16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="choco-balls" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\choco-balls.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Empleados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Empleados.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Clientes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Clientes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shutdown_48px1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shutdown_48px2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
