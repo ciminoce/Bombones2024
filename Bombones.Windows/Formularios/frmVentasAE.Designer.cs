@@ -37,6 +37,13 @@
             btnCajas = new Button();
             btnBombones = new Button();
             dgvDatos = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
+            colProducto = new DataGridViewTextBoxColumn();
+            colPrecio = new DataGridViewTextBoxColumn();
+            colCantidad = new DataGridViewTextBoxColumn();
+            colTotal = new DataGridViewTextBoxColumn();
+            colBorrar = new DataGridViewImageColumn();
+            colEditar = new DataGridViewImageColumn();
             panelTotales = new Panel();
             lblTotal = new Label();
             label4 = new Label();
@@ -47,11 +54,6 @@
             btnOk = new Button();
             panelCarrito = new Panel();
             errorProvider1 = new ErrorProvider(components);
-            colId = new DataGridViewTextBoxColumn();
-            colProducto = new DataGridViewTextBoxColumn();
-            colPrecio = new DataGridViewTextBoxColumn();
-            colCantidad = new DataGridViewTextBoxColumn();
-            colTotal = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -139,13 +141,70 @@
             dgvDatos.AllowUserToAddRows = false;
             dgvDatos.AllowUserToDeleteRows = false;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colId, colProducto, colPrecio, colCantidad, colTotal });
+            dgvDatos.Columns.AddRange(new DataGridViewColumn[] { colId, colProducto, colPrecio, colCantidad, colTotal, colBorrar, colEditar });
             dgvDatos.Dock = DockStyle.Fill;
             dgvDatos.Location = new Point(0, 112);
             dgvDatos.Name = "dgvDatos";
             dgvDatos.ReadOnly = true;
             dgvDatos.Size = new Size(421, 497);
             dgvDatos.TabIndex = 2;
+            dgvDatos.CellContentClick += dgvDatos_CellContentClick;
+            // 
+            // colId
+            // 
+            colId.HeaderText = "Id";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.Visible = false;
+            // 
+            // colProducto
+            // 
+            colProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colProducto.HeaderText = "Producto";
+            colProducto.Name = "colProducto";
+            colProducto.ReadOnly = true;
+            // 
+            // colPrecio
+            // 
+            colPrecio.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colPrecio.HeaderText = "P. Unit.";
+            colPrecio.Name = "colPrecio";
+            colPrecio.ReadOnly = true;
+            colPrecio.Width = 70;
+            // 
+            // colCantidad
+            // 
+            colCantidad.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colCantidad.HeaderText = "Cant.";
+            colCantidad.Name = "colCantidad";
+            colCantidad.ReadOnly = true;
+            colCantidad.Width = 60;
+            // 
+            // colTotal
+            // 
+            colTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colTotal.HeaderText = "Total";
+            colTotal.Name = "colTotal";
+            colTotal.ReadOnly = true;
+            colTotal.Width = 57;
+            // 
+            // colBorrar
+            // 
+            colBorrar.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            colBorrar.HeaderText = "";
+            colBorrar.Image = Properties.Resources.delete_forever_18px;
+            colBorrar.Name = "colBorrar";
+            colBorrar.ReadOnly = true;
+            colBorrar.Width = 5;
+            // 
+            // colEditar
+            // 
+            colEditar.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            colEditar.HeaderText = "";
+            colEditar.Image = Properties.Resources.edit_property_18px;
+            colEditar.Name = "colEditar";
+            colEditar.ReadOnly = true;
+            colEditar.Width = 5;
             // 
             // panelTotales
             // 
@@ -256,44 +315,6 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
-            // colId
-            // 
-            colId.HeaderText = "Id";
-            colId.Name = "colId";
-            colId.ReadOnly = true;
-            colId.Visible = false;
-            // 
-            // colProducto
-            // 
-            colProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colProducto.HeaderText = "Producto";
-            colProducto.Name = "colProducto";
-            colProducto.ReadOnly = true;
-            // 
-            // colPrecio
-            // 
-            colPrecio.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colPrecio.HeaderText = "P. Unit.";
-            colPrecio.Name = "colPrecio";
-            colPrecio.ReadOnly = true;
-            colPrecio.Width = 70;
-            // 
-            // colCantidad
-            // 
-            colCantidad.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colCantidad.HeaderText = "Cant.";
-            colCantidad.Name = "colCantidad";
-            colCantidad.ReadOnly = true;
-            colCantidad.Width = 60;
-            // 
-            // colTotal
-            // 
-            colTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colTotal.HeaderText = "Total";
-            colTotal.Name = "colTotal";
-            colTotal.ReadOnly = true;
-            colTotal.Width = 57;
-            // 
             // frmVentasAE
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -341,5 +362,7 @@
         private DataGridViewTextBoxColumn colPrecio;
         private DataGridViewTextBoxColumn colCantidad;
         private DataGridViewTextBoxColumn colTotal;
+        private DataGridViewImageColumn colBorrar;
+        private DataGridViewImageColumn colEditar;
     }
 }

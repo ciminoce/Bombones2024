@@ -5,7 +5,7 @@ namespace Bombones.Entidades.Entidades
     public class Venta
     {
         public int VentaId { get; set; }
-        public int ClienteId { get; set; }
+        public int? ClienteId { get; set; }
         public DateTime FechaVenta { get; set; }
         public bool Regalo { get; set; }
         public decimal Total { get; set; }
@@ -28,6 +28,11 @@ namespace Bombones.Entidades.Entidades
         }
         public decimal GetTotal() => Detalles.Sum(dv => dv.Cantidad * dv.Precio);
         public int GetCantidad() => Detalles.Sum(dv => dv.Cantidad);
+
+        public void Borrar(DetalleVenta dt)
+        {
+            Detalles.Remove(dt);
+        }
     }
 
     

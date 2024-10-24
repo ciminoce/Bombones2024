@@ -4,6 +4,7 @@ using Bombones.Servicios.Intefaces;
 using Bombones.Windows.Helpers;
 using Bombones.Windows.UsersControls;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text;
 
 namespace Bombones.Windows.Formularios
 {
@@ -57,31 +58,47 @@ namespace Bombones.Windows.Formularios
             if (sender is not null)
             {
                 Button button = (Button)sender;
-                Producto producto =(Producto) button.Tag!;
-                int cantidadVenta = ObtenerCantidadVenta();
+                Producto producto = (Producto)button.Tag!;
+                int? cantidadVenta = ObtenerCantidadVenta(1);
+                if (cantidadVenta is null) return;
+
                 //What's up with the stock? later!!
-                //Ver de borrar algunas cantidad del detalle.. no todo
-                DetalleVenta detalle = new DetalleVenta
+
+                if (cantidadVenta<=producto.Stock)
                 {
-                    BombonId = producto is Bombon ? producto.ProductoId : null,
-                    CajaId = producto is Caja ? producto.ProductoId : null,
-                    Bombon = producto is Bombon bombon ? bombon : null,
-                    Caja = producto is Caja caja ? caja : null,
-                    Precio=producto.PrecioVenta,
-                    Cantidad = cantidadVenta
-                };
-                venta!.Agregar(detalle);
-                GridHelper.MostrarDatosEnGrilla<DetalleVenta>(venta.Detalles, dgvDatos);
-                MostrarTotales();
+                    DetalleVenta detalle = new DetalleVenta
+                    {
+                        BombonId = producto is Bombon ? producto.ProductoId : null,
+                        CajaId = producto is Caja ? producto.ProductoId : null,
+                        Bombon = producto is Bombon bombon ? bombon : null,
+                        Caja = producto is Caja caja ? caja : null,
+                        Precio = producto.PrecioVenta,
+                        Cantidad = cantidadVenta.Value
+                    };
+                    venta!.Agregar(detalle);
+                    //TODO:Tengo que actualizar el producto con el stock en pedido
+                    GridHelper.MostrarDatosEnGrilla<DetalleVenta>(venta.Detalles, dgvDatos);
+                    MostrarTotales();
+
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("Stock Insuficiente"+Environment.NewLine);
+                    sb.AppendFormat($"Stock disponible: {producto.Stock}");
+                    MessageBox.Show(sb.ToString(), "Advertencia",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
-        private int ObtenerCantidadVenta()
+        private int? ObtenerCantidadVenta(int cantidadDefault)
         {
             while (true)
             {
                 var stringCantidad = Microsoft.VisualBasic.Interaction.InputBox("Ingrese la cantidad que compra",
-                        "Cantidad del Producto", "1");
+                        "Cantidad del Producto", cantidadDefault.ToString());
+                if (stringCantidad == null || stringCantidad == string.Empty) return null;
                 if (!int.TryParse(stringCantidad, out int cantidad) || (cantidad <= 0))
                 {
                     MessageBox.Show("Cantidad mal Ingresada", "Error",
@@ -92,7 +109,7 @@ namespace Bombones.Windows.Formularios
                     return cantidad;
                 }
 
-            } 
+            }
         }
 
         private void MostrarTotales()
@@ -124,10 +141,12 @@ namespace Bombones.Windows.Formularios
                     return;
                 }
                 Cliente? cliente = frm.GetCliente();
+                venta!.ClienteId = cliente!.ClienteId != 99999 ? cliente.ClienteId : null;
                 venta.Cliente = cliente;
                 venta.FechaVenta = DateTime.Now;
                 venta.Regalo = false;
                 venta.Total = venta.GetTotal();
+                venta.Estado = EstadoVenta.Pagada;
                 DialogResult = DialogResult.OK;
             }
         }
@@ -136,7 +155,7 @@ namespace Bombones.Windows.Formularios
         {
             bool valido = true;
             errorProvider1.Clear();
-            if (venta.GetCantidad()==0)
+            if (venta.GetCantidad() == 0)
             {
                 valido = false;
                 errorProvider1.SetError(dgvDatos, "Ingresar al menos un ítem");
@@ -164,6 +183,36 @@ namespace Bombones.Windows.Formularios
         public Venta? GetVenta()
         {
             return venta;
+        }
+
+        private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex==5)
+            {
+                var filaSeleccionada = e.RowIndex;
+                var r = dgvDatos.Rows[filaSeleccionada];
+                DetalleVenta dt =(DetalleVenta) r.Tag!;
+                DialogResult dr = MessageBox.Show("¿Anula el item seleccionado?",
+                    "Confirmar",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2);
+                if (dr == DialogResult.No) return;
+                venta.Borrar(dt);
+                GridHelper.QuitarFila(r, dgvDatos);
+                MostrarTotales();
+            }
+            if (e.ColumnIndex==6)
+            {
+                var filaSeleccionada = e.RowIndex;
+                var r = dgvDatos.Rows[filaSeleccionada];
+                DetalleVenta dt = (DetalleVenta)r.Tag!;
+                int? cantidadVendida = ObtenerCantidadVenta(dt.Cantidad);
+                if (cantidadVendida is null) return;
+                dt.Cantidad = cantidadVendida.Value;
+                GridHelper.SetearFila(r, dt);
+                MostrarTotales();
+            }
         }
     }
 }

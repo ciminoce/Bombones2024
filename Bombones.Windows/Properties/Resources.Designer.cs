@@ -213,6 +213,16 @@ namespace Bombones.Windows.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap delete_forever_18px {
+            get {
+                object obj = ResourceManager.GetObject("delete_forever_18px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap delete_sign_28px {
             get {
                 object obj = ResourceManager.GetObject("delete_sign_28px", resourceCulture);
@@ -266,6 +276,16 @@ namespace Bombones.Windows.Properties {
         internal static System.Drawing.Bitmap edit_28px1 {
             get {
                 object obj = ResourceManager.GetObject("edit_28px1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap edit_property_18px {
+            get {
+                object obj = ResourceManager.GetObject("edit_property_18px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
