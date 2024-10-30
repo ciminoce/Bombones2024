@@ -117,7 +117,8 @@ namespace Bombones.Datos.Repositorios
                         TipoDeRellenoId = @TipoDeRellenoId, 
                         PrecioCosto = @PrecioCosto, 
                         PrecioVenta = @PrecioVenta, 
-                        Stock = @Stock, 
+                        Stock = @Stock,
+                        EnPedido=@EnPedido,
                         NivelDeReposicion = @NivelDeReposicion, 
                         Imagen = @Imagen, 
                         FabricaId = @FabricaId, 
@@ -134,6 +135,7 @@ namespace Bombones.Datos.Repositorios
                     bombon.PrecioCosto,
                     bombon.PrecioVenta,
                     bombon.Stock,
+                    bombon.EnPedido,
                     bombon.NivelDeReposicion,
                     bombon.Imagen,
                     bombon.FabricaId,
@@ -155,6 +157,7 @@ namespace Bombones.Datos.Repositorios
                         PrecioCosto = @PrecioCosto, 
                         PrecioVenta = @PrecioVenta, 
                         Stock = @Stock, 
+                        EnPedido=@EnPedido,
                         NivelDeReposicion = @NivelDeReposicion, 
                         Imagen = @Imagen, 
                         Suspendido = @Suspendido 
@@ -167,6 +170,7 @@ namespace Bombones.Datos.Repositorios
                     caja.PrecioCosto,
                     caja.PrecioVenta,
                     caja.Stock,
+                    caja.EnPedido,
                     caja.NivelDeReposicion,
                     caja.Imagen,
                     caja.Suspendido,
@@ -313,6 +317,7 @@ namespace Bombones.Datos.Repositorios
                             PrecioCosto, 
                             PrecioVenta AS Precio, 
                             Stock, 
+                            EnPedido,
                             NivelDeReposicion, 
                             Imagen, 
                             FabricaId, 
@@ -329,6 +334,7 @@ namespace Bombones.Datos.Repositorios
 		                        (SELECT SUM(dc.Cantidad) FROM DetallesCajas dc WHERE dc.CajaId=c.CajaId) as CantidadBombones,
 		                        c.PrecioVenta AS Precio,
 		                        c.Stock,
+                                c.EnPedido,
 		                        c.Suspendido 
                              FROM Cajas c";
                 var listaCajas = conn.Query<CajaListDto>(selectQuery).ToList();
@@ -443,13 +449,22 @@ namespace Bombones.Datos.Repositorios
             if (tipoProducto is TipoProducto.Bombon)
             {
 
-                var selectQuery = @"SELECT b.BombonId AS ProductoId, 
-                                   b.NombreBombon AS Nombre,
-                                b.PrecioVenta,
-                                b.Stock,
-                                b.EnPedido,
-                            FROM Bombones b WHERE b.Suspendido=0
-                            ORDER BY b.NombreBombon";
+                var selectQuery = @"SELECT 
+                            BombonId AS ProductoId, 
+                            NombreBombon AS Nombre, 
+                            Descripcion, 
+                            TipoDeChocolateId, 
+                            TipoDeNuezId, 
+                            TipoDeRellenoId, 
+                            PrecioCosto, 
+                            PrecioVenta, 
+                            Stock,
+                            EnPedido,
+                            NivelDeReposicion, 
+                            Imagen, 
+                            FabricaId, 
+                            Suspendido FROM Bombones WHERE Suspendido=0
+                            ORDER BY NombreBombon";
                 var listaBombones = conn.Query<Bombon>(selectQuery).ToList();
                 listaProductos.AddRange(listaBombones);
 
@@ -457,13 +472,19 @@ namespace Bombones.Datos.Repositorios
             if (tipoProducto is TipoProducto.Caja)
             {
 
-                var selectQuery = @"SELECT c.CajaId AS ProductoId, 
-                                   c.NombreCaja AS Nombre,
-                                c.PrecioVenta,
-                                c.Stock,
-                                c.EnPedido
-                            FROM Cajas c WHERE c.Suspendido=0
-                            ORDER BY c.NombreCaja";
+                var selectQuery = @"SELECT 
+                            CajaId AS ProductoId, 
+                            NombreCaja AS Nombre, 
+                            Descripcion, 
+                            PrecioCosto, 
+                            PrecioVenta, 
+                            Stock, 
+                            EnPedido,
+                            NivelDeReposicion, 
+                            Imagen, 
+                            FabricaId, 
+                            Suspendido FROM Cajas WHERE Suspendido=0
+                            ORDER BY NombreCaja";
                 var listaCajas = conn.Query<Caja>(selectQuery).ToList();
                 listaProductos.AddRange(listaCajas);
 

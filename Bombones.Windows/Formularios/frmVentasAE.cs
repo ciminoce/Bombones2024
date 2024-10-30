@@ -61,22 +61,27 @@ namespace Bombones.Windows.Formularios
                 Producto producto = (Producto)button.Tag!;
                 int? cantidadVenta = ObtenerCantidadVenta(1);
                 if (cantidadVenta is null) return;
+                //Consulto el producto para ver su stock disponible
+                
+                var productoEnPedido = _serviciosProductos!.GetProductoPorId(tipoProducto, producto.ProductoId);
 
-                //What's up with the stock? later!!
-
-                if (cantidadVenta<=producto.StockDisponible)
+                if (cantidadVenta<=productoEnPedido!.StockDisponible)
                 {
                     DetalleVenta detalle = new DetalleVenta
                     {
-                        BombonId = producto is Bombon ? producto.ProductoId : null,
-                        CajaId = producto is Caja ? producto.ProductoId : null,
-                        Bombon = producto is Bombon bombon ? bombon : null,
-                        Caja = producto is Caja caja ? caja : null,
-                        Precio = producto.PrecioVenta,
+                        BombonId = productoEnPedido is Bombon ? productoEnPedido.ProductoId : null,
+                        CajaId = productoEnPedido is Caja ? productoEnPedido.ProductoId : null,
+                        Bombon = productoEnPedido is Bombon bombon ? bombon : null,
+                        Caja = productoEnPedido is Caja caja ? caja : null,
+                        Precio = productoEnPedido.PrecioVenta,
                         Cantidad = cantidadVenta.Value
                     };
                     venta!.Agregar(detalle);
-                    //TODO:Tengo que actualizar el producto con el stock en pedido
+
+                    //actualizo el producto con el stock en pedido
+                    productoEnPedido.EnPedido += detalle.Cantidad;
+                    _serviciosProductos!.Guardar(productoEnPedido);
+
                     GridHelper.MostrarDatosEnGrilla<DetalleVenta>(venta.Detalles, dgvDatos);
                     MostrarTotales();
 
@@ -85,7 +90,7 @@ namespace Bombones.Windows.Formularios
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("Stock Insuficiente"+Environment.NewLine);
-                    sb.AppendFormat($"Stock disponible: {producto.StockDisponible}");
+                    sb.AppendFormat($"Stock disponible: {productoEnPedido.StockDisponible}");
                     MessageBox.Show(sb.ToString(), "Advertencia",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -198,6 +203,14 @@ namespace Bombones.Windows.Formularios
                     MessageBoxIcon.Question,
                     MessageBoxDefaultButton.Button2);
                 if (dr == DialogResult.No) return;
+
+                //Datos para consultar el producto en pedido
+                var tipoProducto = dt.BombonId is null ? TipoProducto.Caja : TipoProducto.Bombon;
+                var productoId = dt.BombonId ?? dt.CajaId;
+                var productoEnPedido = _serviciosProductos!.GetProductoPorId(tipoProducto, productoId!.Value);
+                productoEnPedido!.EnPedido -= dt.Cantidad;
+                _serviciosProductos.Guardar(productoEnPedido);
+
                 venta.Borrar(dt);
                 GridHelper.QuitarFila(r, dgvDatos);
                 MostrarTotales();
@@ -209,9 +222,30 @@ namespace Bombones.Windows.Formularios
                 DetalleVenta dt = (DetalleVenta)r.Tag!;
                 int? cantidadVendida = ObtenerCantidadVenta(dt.Cantidad);
                 if (cantidadVendida is null) return;
-                dt.Cantidad = cantidadVendida.Value;
-                GridHelper.SetearFila(r, dt);
-                MostrarTotales();
+
+                var tipoProducto = dt.BombonId is null ? TipoProducto.Caja : TipoProducto.Bombon;
+                var productoId = dt.BombonId ?? dt.CajaId;
+                var productoEnPedido = _serviciosProductos!.GetProductoPorId(tipoProducto, productoId!.Value);
+                productoEnPedido!.EnPedido = productoEnPedido.EnPedido + cantidadVendida.Value - dt.Cantidad;
+
+                if (cantidadVendida<=productoEnPedido.StockDisponible)
+                {
+                    _serviciosProductos.Guardar(productoEnPedido);
+
+                    dt.Cantidad = cantidadVendida.Value;
+                    GridHelper.SetearFila(r, dt);
+                    MostrarTotales();
+
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("Stock Insuficiente" + Environment.NewLine);
+                    sb.AppendFormat($"Stock disponible: {productoEnPedido.StockDisponible}");
+                    MessageBox.Show(sb.ToString(), "Advertencia",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                }
             }
         }
     }
