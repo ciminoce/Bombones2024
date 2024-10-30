@@ -64,7 +64,7 @@ namespace Bombones.Windows.Formularios
 
                 //What's up with the stock? later!!
 
-                if (cantidadVenta<=producto.Stock)
+                if (cantidadVenta<=producto.StockDisponible)
                 {
                     DetalleVenta detalle = new DetalleVenta
                     {
@@ -85,7 +85,7 @@ namespace Bombones.Windows.Formularios
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("Stock Insuficiente"+Environment.NewLine);
-                    sb.AppendFormat($"Stock disponible: {producto.Stock}");
+                    sb.AppendFormat($"Stock disponible: {producto.StockDisponible}");
                     MessageBox.Show(sb.ToString(), "Advertencia",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
