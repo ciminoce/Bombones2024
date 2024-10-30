@@ -9,6 +9,7 @@
         public decimal PrecioVenta { get; set; }
         public int Stock { get; set; }
         public int EnPedido { get; set; }
+        public int StockDisponible { get => Stock - EnPedido; }
         public int NivelDeReposicion { get; set; }
         public string? Imagen { get; set; }
         public bool Suspendido { get; set; }

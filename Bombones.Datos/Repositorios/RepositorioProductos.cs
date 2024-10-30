@@ -242,7 +242,8 @@ namespace Bombones.Datos.Repositorios
                         TipoDeRellenoId, 
                         PrecioCosto, 
                         PrecioVenta, 
-                        Stock, 
+                        Stock,
+                        EnPedido,
                         NivelDeReposicion, 
                         Imagen, 
                         FabricaId, 
@@ -260,7 +261,8 @@ namespace Bombones.Datos.Repositorios
                            c.Descripcion, 
                            c.PrecioCosto, 
                            c.PrecioVenta, 
-                           c.Stock, 
+                           c.Stock,
+                           c.EnPedido,
                            c.NivelDeReposicion, 
                            c.Imagen, 
                            c.Suspendido,
@@ -355,6 +357,7 @@ namespace Bombones.Datos.Repositorios
                                    tr.Descripcion AS TipoDeRelleno, 
                                    f.NombreFabrica AS Fabrica, 
                                    b.Stock, 
+                                   b.EnPedido,
                                    b.PrecioVenta AS Precio
                             FROM Bombones b 
                             INNER JOIN TiposDeChocolates tc ON b.TipoDeChocolateId = tc.TipoDeChocolateId
@@ -374,6 +377,7 @@ namespace Bombones.Datos.Repositorios
 		                        (SELECT SUM(dc.Cantidad) FROM DetallesCajas dc WHERE dc.CajaId=c.CajaId) as CantidadBombones,
 		                        c.PrecioVenta AS Precio,
 		                        c.Stock,
+                                c.EnPedido,
 		                        c.Suspendido
                         FROM Cajas c";
                 var listaCajas = conn.Query<CajaListDto>(selectQuery).ToList();
@@ -442,7 +446,8 @@ namespace Bombones.Datos.Repositorios
                 var selectQuery = @"SELECT b.BombonId AS ProductoId, 
                                    b.NombreBombon AS Nombre,
                                 b.PrecioVenta,
-                                b.Stock
+                                b.Stock,
+                                b.EnPedido,
                             FROM Bombones b WHERE b.Suspendido=0
                             ORDER BY b.NombreBombon";
                 var listaBombones = conn.Query<Bombon>(selectQuery).ToList();
@@ -455,7 +460,8 @@ namespace Bombones.Datos.Repositorios
                 var selectQuery = @"SELECT c.CajaId AS ProductoId, 
                                    c.NombreCaja AS Nombre,
                                 c.PrecioVenta,
-                                c.Stock
+                                c.Stock,
+                                c.EnPedido
                             FROM Cajas c WHERE c.Suspendido=0
                             ORDER BY c.NombreCaja";
                 var listaCajas = conn.Query<Caja>(selectQuery).ToList();

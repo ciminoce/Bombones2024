@@ -85,7 +85,7 @@ namespace Bombones.Windows.Helpers
                     r.Cells[3].Value = bombon.TipoDeRelleno;
                     r.Cells[4].Value = bombon.TipoDeNuez;
                     r.Cells[5].Value = bombon.Fabrica;
-                    r.Cells[6].Value= bombon.Stock;
+                    r.Cells[6].Value= bombon.StockDisponible;
                     r.Cells[7].Value = bombon.Precio;
                     break;
                 case DireccionListDto direccion:
@@ -110,7 +110,7 @@ namespace Bombones.Windows.Helpers
                     r.Cells[1].Value = caja.Nombre;
                     r.Cells[2].Value = caja.CantidadBombones;
                     r.Cells[3].Value = caja.Variedades;
-                    r.Cells[4].Value = caja.Stock;
+                    r.Cells[4].Value = caja.StockDisponible;
                     r.Cells[5].Value = caja.Precio;
                     r.Cells[6].Value = caja.Suspendido;
                     break;
